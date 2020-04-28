@@ -1,0 +1,38 @@
+html {
+  font-family: "Segoe UI", "Segoe UI Emoji", "Helvetica Neue", "Helvetica", sans-serif;
+  box-sizing: border-box;
+}
+
+* {
+  font-family: inherit;
+  box-sizing: inherit;
+}
+
+ul.tree-view, ul.tree-view ul {
+  list-style-type: none;
+}
+ul.tree-view li {
+  margin: 0.25em 0;
+}
+
+.pointer {
+  cursor: move;
+}
+
+.no-select {
+  user-select: none;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  flex-basis: 20em;
+}
+
+main {
+  flex-basis: 40em;
+  flex-grow: 1;
+}

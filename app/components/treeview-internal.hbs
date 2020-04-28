@@ -1,0 +1,25 @@
+{{#if @node}}
+  <li>
+    {{#if @items}}
+        <span {{action 'toggleDisplay'}} class="no-select">{{if isDisplayed '↘' '➡'}}</span>
+    {{/if}}
+    <span class="pointer">{{@node}}</span>
+  </li>
+{{/if}}
+{{#if @items}}
+  {{#if isDisplayed}}
+    <li>
+      <ul>
+        {{#each @items as |subtree|}}
+          {{#if subtree}}
+            {{#if subtree.node}}
+              {{treeview-internal node=subtree.node items=subtree.items}}
+            {{else}}
+              {{treeview-internal node=subtree}}
+            {{/if}}
+          {{/if}}
+        {{/each}}
+      </ul>
+    </li>
+  {{/if}}
+{{/if}}

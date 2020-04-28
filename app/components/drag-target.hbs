@@ -1,0 +1,5 @@
+<div {{on 'drop' (fn this.onDrop)}} {{on 'dragover' (fn this.onDragOver)}} class="drag-target">
+  {{#each elementsCollection as |elem|}}
+    <p>{{elem}}</p>
+  {{/each}}
+</div>

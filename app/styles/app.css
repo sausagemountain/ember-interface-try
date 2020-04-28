@@ -16,7 +16,7 @@ ul.tree-view li {
 }
 
 .pointer {
-  cursor: move;
+  cursor: unset;
 }
 
 .no-select {
@@ -35,4 +35,9 @@ ul.tree-view li {
 main {
   flex-basis: 40em;
   flex-grow: 1;
+}
+
+.drag-target {
+  background: aliceblue;
+  min-height: 10em;
 }

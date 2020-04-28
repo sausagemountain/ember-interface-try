@@ -3,7 +3,9 @@
     {{#if @items}}
         <span {{action 'toggleDisplay'}} class="no-select">{{if isDisplayed '↘' '➡'}}</span>
     {{/if}}
-    <span class="pointer">{{@node}}</span>
+    <span class="pointer">
+    {{yield}}
+    </span>
   </li>
 {{/if}}
 {{#if @items}}
@@ -13,9 +15,13 @@
         {{#each @items as |subtree|}}
           {{#if subtree}}
             {{#if subtree.node}}
-              {{treeview-internal node=subtree.node items=subtree.items}}
+              {{#treeview-internal node=subtree.node items=subtree.items parent=this}}
+                {{subtree.node}}
+              {{/treeview-internal}}
             {{else}}
-              {{treeview-internal node=subtree}}
+              {{#treeview-internal node=subtree parent=this}}
+                {{subtree}}
+              {{/treeview-internal}}
             {{/if}}
           {{/if}}
         {{/each}}

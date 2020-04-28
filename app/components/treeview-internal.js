@@ -7,9 +7,7 @@ export default class TreeviewInternalComponent extends Component {
   isDisplayed=true
 
   get path() {
-    let a = this.parent.path + '/' + this.node
-    console.log(a)
-    return a
+    return this.args.parent.path + '/' + this.args.node
   }
 
   @action

@@ -16,7 +16,7 @@ ul.tree-view li {
 }
 
 .pointer {
-  cursor: unset;
+  cursor: move;
 }
 
 .no-select {

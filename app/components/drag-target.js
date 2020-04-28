@@ -11,6 +11,7 @@ export default class DragTargetComponent extends Component {
   onDrop(event) {
     event.preventDefault()
     let data = event.dataTransfer.getData('text')
+    console.log(data)
     this.elementsCollection.pushObject(data)
   }
   onDragOver(event) {

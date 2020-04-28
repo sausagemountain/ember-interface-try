@@ -4,7 +4,9 @@
         <span {{action 'toggleDisplay'}} class="no-select">{{if isDisplayed '↘' '➡'}}</span>
     {{/if}}
     <span class="pointer">
-    {{yield}}
+    {{#draggable-item data=this.path}}
+      {{yield}}
+    {{/draggable-item}}
     </span>
   </li>
 {{/if}}

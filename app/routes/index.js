@@ -1,10 +1,9 @@
 import Route from '@ember/routing/route';
-import DraggableItemComponent from "../components/draggable-item";
 
 export default class IndexRoute extends Route {
 
   model() {
-    let a = {
+    return {
       'tree': {
         'node': 'head',
         'items': [
@@ -23,7 +22,5 @@ export default class IndexRoute extends Route {
         ],
       },
     };
-
-    return a;
   }
 }

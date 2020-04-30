@@ -4,9 +4,9 @@
         <span {{action 'toggleDisplay'}} class="no-select">{{if isDisplayed '↘' '➡'}}</span>
     {{/if}}
     <span class="pointer">
-    {{#draggable-item data=this.path}}
-      {{yield}}
-    {{/draggable-item}}
+      <DraggableItem @data={{this.path}}>
+        {{yield}}
+      </DraggableItem>
     </span>
   </li>
 {{/if}}
@@ -17,13 +17,13 @@
         {{#each @items as |subtree|}}
           {{#if subtree}}
             {{#if subtree.node}}
-              {{#treeview-internal node=subtree.node items=subtree.items parent=this}}
+              <TreeviewInternal @node={{subtree.node}} @items={{subtree.items}} @parent={{this}}>
                 {{subtree.node}}
-              {{/treeview-internal}}
+              </TreeviewInternal>
             {{else}}
-              {{#treeview-internal node=subtree parent=this}}
+              <TreeviewInternal @node={{subtree}} @parent={{this}}>
                 {{subtree}}
-              {{/treeview-internal}}
+              </TreeviewInternal>
             {{/if}}
           {{/if}}
         {{/each}}

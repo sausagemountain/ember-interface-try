@@ -1,1 +1,1 @@
-<span draggable="true" {{on 'dragstart' (fn this.onDragStart)}} class="pointer">{{yield}}</span>
+<span draggable="true" {{on 'dragstart' (fn this.onDragStart @data)}} class="pointer">{{yield}}</span>

@@ -1,8 +1,9 @@
 <button {{action 'clear'}}>Clear</button>
 <div {{on 'drop' (fn this.onDrop)}} {{on 'dragover' (fn this.onDragOver)}} class="drag-target">
   {{#each elementsCollection as |elem|}}
-    <RemovableListItem @items={{elementsCollection}} @listItem={{elem}}>
+    <RemovableListItem @list={{elementsCollection}} @item={{elem}}>
       <span>{{elem}}</span>
     </RemovableListItem>
+    <br/>
   {{/each}}
 </div>

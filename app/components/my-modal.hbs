@@ -1,0 +1,8 @@
+<div class="modal-base{{if this.hidden ' collapsed'}}">
+  <div class="modal-holder">
+    <span class="close-button pointer-action no-select"  {{on 'click' this.hide}}>❌</span>
+    <div>
+      {{yield}}
+    </div>
+  </div>
+</div>

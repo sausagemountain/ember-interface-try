@@ -1,5 +1,11 @@
 <ul class="tree-view">
-  <TreeviewInternal @node={{@node}} @items={{@items}} @parent={{this}}>
-    {{@node}}
-  </TreeviewInternal>
+  {{#each @tree as |item|}}
+    <TreeviewInternal @node={{item}} @items={{item.items}} @parent={{this}} @nonDraggable={{item.items}}>
+      {{#if item.node}}
+        {{item.node}}
+      {{else}}
+        {{item}}
+      {{/if}}
+    </TreeviewInternal>
+  {{/each}}
 </ul>

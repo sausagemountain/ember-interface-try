@@ -4,6 +4,6 @@ import { action } from '@ember/object';
 export default class RemovableListItemComponent extends Component {
   @action
   removeItem() {
-    this.args.items.removeObject(this.args.listItem)
+    this.args.list.removeObject(this.args.item)
   }
 }

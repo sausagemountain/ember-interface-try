@@ -5,16 +5,16 @@ import {A} from '@ember/array';
 export default class TreeviewComponent extends Component {
   constructor() {
     super(...arguments);
-    this.items = A(this.args.tree)
+    if (this.args.tree)
+      this.items = A(this.args.tree)
   }
 
   @tracked
-  items = undefined
-
+  items = A([])
 
   get path() {
     if (this.args.parent)
-      return this.args.parent.path
+      return this.args.parent.path + '/'
     return ''
   }
 }

@@ -1,25 +1,21 @@
 {{#if @node}}
   <li>
     <div class="inline-block">
-      {{#if @node.items}}
+      {{#if this.items}}
           <div {{action 'toggleDisplay'}} class="no-select tree-view-expander">{{if isDisplayed '↘' '➡'}}</div>
       {{/if}}
-      <RemovableListItem @list={{@parent.items}} @item={{@node}}>
-        <AddToListItem @list={{this.items}} @item={{"test"}}>
-          {{#if @nonDraggable}}
+      <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}>
+        <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}}>
+          <DraggableItem @data={{this.path}}>
             {{yield}}
-          {{else}}
-            <DraggableItem @data={{this.path}}>
-              {{yield}}
-            </DraggableItem>
-          {{/if}}
-        </AddToListItem>
-      </RemovableListItem>
+          </DraggableItem>
+        </RemovableListItem>
+      </AddToListItem>
     </div>
   </li>
-{{/if}}
-{{#if @node.items}}
+  {{#if this.items.length}}
     <li class="{{unless isDisplayed 'collapsed'}}">
-      <Treeview @tree={{@node.items}} @parent={{this}}/>
+      <Treeview @tree={{this.items}} @parent={{this}} @noAddButton={{true}} @action={{@action}} @onChangeContents={{@onChangeContents}}/>
     </li>
+  {{/if}}
 {{/if}}

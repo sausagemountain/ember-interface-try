@@ -3,7 +3,12 @@ import { action } from '@ember/object';
 
 export default class RemovableListItemComponent extends Component {
   @action
-  removeItem() {
-    this.args.list.removeObject(this.args.item)
+  async removeItem() {
+    if (this.args.item || this.args.item === 0)
+      this.args.list.removeAt(this.args.list.lastIndexOf(this.args.item))
+    if (this.args.index || this.args.index === 0)
+      this.args.list.removeAt(this.args.index)
+    if (this.args.onChange)
+      await this.args.onChange()
   }
 }

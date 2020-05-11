@@ -1,11 +1,18 @@
 <ul class="tree-view">
-  {{#each @tree as |item|}}
-    <TreeviewInternal @node={{item}} @items={{item.items}} @parent={{this}} @nonDraggable={{item.items}}>
-      {{#if item.node}}
-        {{item.node}}
-      {{else}}
-        {{item}}
-      {{/if}}
-    </TreeviewInternal>
-  {{/each}}
+  {{#if this.items.length}}
+    {{#each this.items as |item index|}}
+      <TreeviewInternal @node={{item}} @index={{index}} @parent={{this}} @action={{@action}} @onChangeContents={{@onChangeContents}}>
+        {{#if item.node}}
+          {{item.node}}
+        {{else}}
+          {{item}}
+        {{/if}}
+      </TreeviewInternal>
+    {{/each}}
+  {{/if}}
+  {{#unless @noAddButton}}
+    <li>
+      <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}> Add Item</AddToListItem>
+    </li>
+  {{/unless}}
 </ul>

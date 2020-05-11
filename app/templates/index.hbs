@@ -1,11 +1,13 @@
 <div class="flex-col">
   <div class="sidebar">
     <h1>index page</h1>
-    <div class="tree-view" >
-      <Treeview @tree={{model.tree}}/>
-      <MyModal>
-        <input type="text">
-      </MyModal>
+    <div>
+      <Treeview @tree={{model.tree}} @action={{model.treeviewShowModalAction}} @onChangeContents={{model.saveTreeviewCookie}}/>
+      {{#if model.treeViewModalOpen}}
+        <MyModal @clickedOutside={{model.modalFailAction}}>
+          {{input type="text" placeholder="New Item" value=model.modalTextValue id="modalSidebarInput"}} <button {{action model.modalCloseAction}}>Done!</button>
+        </MyModal>
+      {{/if}}
     </div>
   </div>
   <main>

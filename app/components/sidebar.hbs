@@ -1,0 +1,20 @@
+<div class="{{if @open 'sidebar' ''}}">
+  <button {{action this.toggleOpen}} class="sidebar-toggle {{if @right 'float-left' 'float-right'}}">
+    {{#if @right}}
+      {{#if @open}}
+        ▶
+      {{else}}
+        ◀
+      {{/if}}
+    {{else}}
+      {{#if @open}}
+        ◀
+      {{else}}
+        ▶
+      {{/if}}
+    {{/if}}
+  </button>
+  <div class="{{unless @open 'collapsed' ''}}">
+    {{yield}}
+  </div>
+</div>

@@ -8,9 +8,19 @@ export default class TreeviewInternalComponent extends Component {
     super(...arguments);
     if (this.args.node.items)
       this.items = A(this.args.node.items)
+    if (this.args.node.canAdd !== undefined)
+      this.canAdd = A(this.args.node.canAdd)
+    if (this.args.node.canRemove !== undefined)
+      this.canRemove = A(this.args.node.canRemove)
     if(this.args.isDisplayed !== undefined)
       this.isDisplayed = this.args.isDisplayed
   }
+
+  @tracked
+  canAdd = true
+
+  @tracked
+  canRemove = true
 
   @tracked
   items = A([])

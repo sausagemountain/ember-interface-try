@@ -1,16 +1,25 @@
 <div class="flex-col">
-  <div class="sidebar">
-    <h1>index page</h1>
+  <Sidebar @open={{model.markersOpen}} @onToggle={{model.toggleSidebar}}>
     <div>
-      <Treeview @tree={{model.tree}} @action={{model.treeviewShowModalAction}} @onChangeContents={{model.saveTreeviewCookie}}/>
-      <Modal @isOpen={{model.treeViewModalOpen}} @clickedOutside={{model.modalFailAction}} @onOpen={{model.modalOpen}}>
-        {{input type="text" placeholder="New Item" value=model.modalTextValue id="modalSidebarInput"}} <button {{action model.modalCloseAction}}>Done!</button>
+      <h1>index page</h1>
+      <Treeview @tree={{model.markers}} @action={{model.markerTreeViewShowModalAction}} @onChangeContents={{model.saveMarkerTreeViewCookie}}/>
+      <Modal @isOpen={{model.markerTreeViewModalOpen}} @clickedOutside={{model.markerModalFailAction}} @onOpen={{model.markerModalOpen}}>
+        {{input type="text" placeholder="New Item" value=model.markerModalTextValue id="markerModalSidebarInput"}} <button {{action model.markerModalCloseAction}}>Done!</button>
       </Modal>
     </div>
-  </div>
+    <br/>
+    <div>
+      <Treeview @tree={{model.characteristics}} @action={{model.charsTreeViewShowModalAction}} @onChangeContents={{model.saveCharTreeViewCookie}}/>
+    </div>
+  </Sidebar>
   <main>
-    <DragTarget/>
+    <button {{action model.addGraph}} class="float-left">Add Graph</button>
+    <DragTarget></DragTarget>
   </main>
+  <Sidebar @right={{true}} @open={{model.optionsOpen}} @onToggle={{model.toggleSidebar}}>
+    <PropertiesEditor>
+    </PropertiesEditor>
+  </Sidebar>
 </div>
 
 {{outlet}}

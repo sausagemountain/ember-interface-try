@@ -1,4 +1,5 @@
-<button {{action 'clear'}}>Clear</button>
+<button {{action this.clear}} class="float-left">Clear</button>
+<br/>
 <div {{on 'drop' (fn this.onDrop)}} {{on 'dragover' (fn this.onDragOver)}} class="drag-target">
   {{#each elementsCollection as |elem|}}
     <RemovableListItem @list={{elementsCollection}} @item={{elem}}>

@@ -4,13 +4,27 @@
       {{#if this.items}}
           <div {{action 'toggleDisplay'}} class="no-select tree-view-expander">{{if isDisplayed '↘' '➡'}}</div>
       {{/if}}
-      <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}>
-        <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}}>
-          <DraggableItem @data={{this.path}} @index={{0}}>
+      {{#if this.canAdd}}
+        {{#if this.canRemove}}
+          <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}>
+            <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}}>
+              {{yield}}
+            </RemovableListItem>
+          </AddToListItem>
+        {{else}}
+          <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}>
             {{yield}}
-          </DraggableItem>
-        </RemovableListItem>
-      </AddToListItem>
+          </AddToListItem>
+        {{/if}}
+      {{else}}
+        {{#if this.canRemove}}
+          <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}}>
+            {{yield}}
+          </RemovableListItem>
+        {{else}}
+          {{yield}}
+        {{/if}}
+      {{/if}}
     </div>
   </li>
   {{#if this.items.length}}

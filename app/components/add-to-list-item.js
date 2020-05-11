@@ -5,8 +5,7 @@ export default class AddToListItemComponent extends Component {
   @action
   async addItem() {
     if (this.args.action) {
-      const res = this.args.action()
-      const result = await res
+      const result = await this.args.action()
       if (result) {
         this.args.list.pushObject(result)
 

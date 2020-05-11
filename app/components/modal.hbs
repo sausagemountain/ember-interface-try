@@ -1,0 +1,5 @@
+{{#if @isOpen}}
+  <MyModal @onOpen={{@onOpen}} @clickedOutside={{@clickedOutside}}>
+    {{yield}}
+  </MyModal>
+{{/if}}

@@ -9,6 +9,11 @@ export default class App extends Application {
     super(...arguments);
   }
 
+
+  static sleep(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver;

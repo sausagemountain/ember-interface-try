@@ -6,7 +6,7 @@
       {{/if}}
       <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}>
         <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}}>
-          <DraggableItem @data={{this.path}}>
+          <DraggableItem @data={{this.path}} @index={{0}}>
             {{yield}}
           </DraggableItem>
         </RemovableListItem>

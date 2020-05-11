@@ -3,11 +3,9 @@
     <h1>index page</h1>
     <div>
       <Treeview @tree={{model.tree}} @action={{model.treeviewShowModalAction}} @onChangeContents={{model.saveTreeviewCookie}}/>
-      {{#if model.treeViewModalOpen}}
-        <MyModal @clickedOutside={{model.modalFailAction}}>
-          {{input type="text" placeholder="New Item" value=model.modalTextValue id="modalSidebarInput"}} <button {{action model.modalCloseAction}}>Done!</button>
-        </MyModal>
-      {{/if}}
+      <Modal @isOpen={{model.treeViewModalOpen}} @clickedOutside={{model.modalFailAction}} @onOpen={{model.modalOpen}}>
+        {{input type="text" placeholder="New Item" value=model.modalTextValue id="modalSidebarInput"}} <button {{action model.modalCloseAction}}>Done!</button>
+      </Modal>
     </div>
   </div>
   <main>

@@ -14,20 +14,21 @@ export default class IndexRoute extends Route {
 
   @action
   treeviewShowModalAction() {
-    function sleep(ms){
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    console.log("treeViewShowModalAction")
     this.modalTextValue = ""
     this.treeViewModalOpen = true
-    sleep(100).then(() => {
-      document.getElementById("modalSidebarInput").focus()
-    })
-    let result = sleep(100).then(async () => {
+    let result = App.sleep(100).then(async () => {
       while (this.treeViewModalOpen){
-        await sleep(100)
+        await App.sleep(100)
       }
-    }).then(() => result = this.modalTextValue)
+    }).then(() => {
+      if (this.treeViewModalSuccess) {
+        result = this.modalTextValue
+      }
+      else {
+        result = null
+      }
+      return result
+    })
     return result
   }
 
@@ -38,24 +39,46 @@ export default class IndexRoute extends Route {
 
   @action
   modalFailAction() {
-    this.modalTextValue = null
+    this.treeViewModalSuccess = false
     this.treeViewModalOpen = false
-    return undefined
   }
 
   @action
   modalCloseAction() {
+    this.treeViewModalSuccess = true
     this.treeViewModalOpen = false
-    return undefined
+  }
+
+  @action
+  modalKeyDownCloseAction(event) {
+    console.log(event)
+    if (event.key === 'Enter') {
+      this.treeViewModalSuccess = true
+      this.treeViewModalOpen = false
+    }
+    else if (event.key === 'Escape') {
+      this.treeViewModalSuccess = false
+      this.treeViewModalOpen = false
+    }
   }
 
   @tracked
   treeViewModalOpen = false
 
   @tracked
+  treeViewModalSuccess = null
+
+  @tracked
   modalTextValue = ""
 
   treeViewContentsCookie = "treeViewContentsCookie"
+
+  @action
+  modalOpen(){
+    const input = document.getElementById("modalSidebarInput")
+    input.focus()
+    input.addEventListener('keydown', this.modalKeyDownCloseAction)
+  }
 
   tree = [
     {
@@ -67,8 +90,6 @@ export default class IndexRoute extends Route {
   ]
 
   model() {
-    window.addEventListener('getNewName', this.showSidebarTreeviewModal)
-    window.addEventListener('hide', this.treeviewModalHidden)
     return this;
   }
 }

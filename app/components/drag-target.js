@@ -41,9 +41,19 @@ export default class DragTargetComponent extends Component {
   @action
   onDrop(event) {
     event.preventDefault()
-    const data = event.dataTransfer.getData('text');
-    this.elementsCollection.pushObject(data)
-
+    if (this.args.action !== undefined){
+      this.args.action()
+      return
+    }
+    else {
+      const data = event.dataTransfer.getData('data')
+      const index = event.dataTransfer.getData('index')
+      if (index === undefined) {
+        this.elementsCollection.pushObject(data)
+      } else {
+        this.elementsCollection.insertAt(index, data)
+      }
+    }
   }
 
   onDragOver(event) {

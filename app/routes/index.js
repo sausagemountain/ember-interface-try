@@ -16,48 +16,6 @@ export default class IndexRoute extends Route {
       this.chars = chars
   }
 
-  //region markerTreeViewModal
-
-  @action
-  markerModalOpen(){
-    const input = document.getElementById("markerModalSidebarInput")
-    input.focus()
-    input.addEventListener('keydown', this.markerModalKeyDownCloseAction)
-  }
-
-  @action
-  markerModalFailAction() {
-    this.markerTreeViewModalSuccess = false
-    this.markerTreeViewModalOpen = false
-  }
-
-  @action
-  markerModalCloseAction() {
-    this.markerTreeViewModalSuccess = true
-    this.markerTreeViewModalOpen = false
-  }
-
-  @action
-  markerModalKeyDownCloseAction(event) {
-    if (event.key === 'Enter') {
-      this.markerModalCloseAction()
-    }
-    else if (event.key === 'Escape') {
-      this.markerModalFailAction()
-    }
-  }
-
-  @tracked
-  markerTreeViewModalOpen = false
-
-  @tracked
-  markerTreeViewModalSuccess = null
-
-  @tracked
-  markerModalTextValue = ""
-
-  //endregion
-
   //region markerTreeView
 
   markers = [
@@ -80,23 +38,23 @@ export default class IndexRoute extends Route {
     App.setCookie(this.markerTreeViewContentsCookie, this.markers)
   }
 
+  @tracked
+  editableProperty = null
+
   @action
   markerTreeViewShowModalAction() {
-    this.markerModalTextValue = ""
-    this.markerTreeViewModalOpen = true
+    this.toggleSidebar()
     return App.sleep(100).then(async () => {
-      while (this.markerTreeViewModalOpen){
+      this.editableProperty = {
+        'name': '',
+      }
+      while (this.optionsOpen){
         await App.sleep(100)
       }
     }).then(() => {
-      if (this.markerTreeViewModalSuccess) {
-        return {
-          'node': this.markerModalTextValue,
-        }
-      }
-      else {
-        return null
-      }
+      let res = this.editableProperty.name
+      this.editableProperty = null
+      return res
     })
   }
 
@@ -140,7 +98,6 @@ export default class IndexRoute extends Route {
 
   @action
   toggleSidebar() {
-    console.log(1)
     this.markersOpen = !this.markersOpen
     this.optionsOpen = !this.optionsOpen
   }

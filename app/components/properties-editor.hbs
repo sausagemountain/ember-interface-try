@@ -1,1 +1,6 @@
-{{yield}}
+<dl>
+  {{#each-in @properties as |key value|}}
+    <dt>{{key}}</dt>
+    <dd>{{input value=value}}</dd>
+  {{/each-in}}
+</dl>

@@ -28,8 +28,10 @@
     </div>
   </li>
   {{#if this.items.length}}
-    <li class="{{unless isDisplayed 'collapsed'}}">
-      <Treeview @tree={{this.items}} @parent={{this}} @noAddButton={{true}} @action={{@action}} @onChangeContents={{@onChangeContents}}/>
-    </li>
+    {{#unless isDisplayed}}
+        <li class="{{unless isDisplayed 'collapsed'}}">
+          <Treeview @tree={{this.items}} @parent={{this}} @noAddButton={{true}} @action={{@action}} @onChangeContents={{@onChangeContents}}/>
+        </li>
+    {{/unless}}
   {{/if}}
 {{/if}}

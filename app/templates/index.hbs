@@ -1,5 +1,5 @@
 <div class="flex-col">
-  <Sidebar @open={{model.markersOpen}} @onToggle={{model.toggleSidebar}}>
+  <Sidebar @open={{model.markersOpen}} @onToggle={{model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}}>
     <div>
       <h1>index page</h1>
       <Treeview @tree={{model.markers}} @action={{model.markerTreeViewShowModalAction}} @onChangeContents={{model.saveMarkerTreeViewCookie}}/>
@@ -13,9 +13,10 @@
     <button {{action model.addGraph}} class="float-left">Add Graph</button>
     <DragTarget></DragTarget>
   </main>
-  <Sidebar @right={{true}} @open={{model.optionsOpen}} @onToggle={{model.toggleSidebar}}>
-    <PropertiesEditor @properties={{model.editableProperty}}>
-    </PropertiesEditor>
+  <Sidebar @right={{true}} @open={{model.optionsOpen}} @onToggle={{model.toggleSidebar}} @cantShow={{true}}>
+    {{#if model.optionsOpen}}
+      <PropertiesEditor @properties={{model.editableProperty}} @enter={{model.debug}} @lastEnter={{model.last}}/>
+    {{/if}}
   </Sidebar>
 </div>
 

@@ -7,6 +7,8 @@ export default class IndexRoute extends Route {
   constructor() {
     super(...arguments);
 
+    this.last = this.last.bind(this)
+
     const markers = App.getCookie(this.markerTreeViewContentsCookie)
     if (markers)
       this.markers = markers
@@ -43,11 +45,12 @@ export default class IndexRoute extends Route {
 
   @action
   markerTreeViewShowModalAction() {
-    this.toggleSidebar()
-    return App.sleep(100).then(async () => {
+    return App.sleep(0).then(async () => {
       this.editableProperty = {
         'name': '',
+        'index': -1
       }
+      this.toggleSidebar()
       while (this.optionsOpen){
         await App.sleep(100)
       }
@@ -109,8 +112,16 @@ export default class IndexRoute extends Route {
   addGraph(){
 
   }
+  debug() {
+    console.log(1)
+  }
+
+  last() {
+    this.toggleSidebar()
+  }
 
   //endregion
+
 
   model() {
     return this;

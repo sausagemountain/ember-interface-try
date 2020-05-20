@@ -1,6 +1,9 @@
-<dl>
-  {{#each-in @properties as |key value|}}
-    <dt>{{key}}</dt>
-    <dd>{{input value=value}}</dd>
-  {{/each-in}}
-</dl>
+{{#each-in this.props as |key value|}}
+  <label>
+    <span>
+      {{key}}
+    </span>
+    <Input @value={{value.val}} @type={{value.type}} pattern={{value.regex}} @focusOut={{fn this.update @properties key}} @enter={{fn this.enter @properties key}}/>
+  </label>
+  <br/>
+{{/each-in}}

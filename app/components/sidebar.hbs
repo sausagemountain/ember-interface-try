@@ -2,15 +2,23 @@
   <button {{action this.toggleOpen}} class="sidebar-toggle {{if @right 'float-left' 'float-right'}}">
     {{#if @right}}
       {{#if @open}}
-        ▶
+        {{#unless @cantHide}}
+          ▶
+        {{/unless}}
       {{else}}
-        ◀
+        {{#unless @cantShow}}
+          ◀
+        {{/unless}}
       {{/if}}
     {{else}}
       {{#if @open}}
-        ◀
+        {{#unless @cantHide}}
+          ◀
+        {{/unless}}
       {{else}}
-        ▶
+        {{#unless @cantShow}}
+          ▶
+        {{/unless}}
       {{/if}}
     {{/if}}
   </button>

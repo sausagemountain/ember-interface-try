@@ -13,9 +13,9 @@ export default class IndexRoute extends Route {
     if (markers)
       this.markers = markers
 
-    const chars = App.getCookie(this.charsTreeViewContentsCookie)
+    const chars = App.getCookie(this.charsTreeViewCookie)
     if (chars)
-      this.chars = chars
+      this.characteristics = chars
   }
 
   //region markerTreeView
@@ -26,8 +26,7 @@ export default class IndexRoute extends Route {
       'canAdd': true,
       'items': [
         {
-          'node': '0',
-          'canAdd': false
+          'node': '0'
         },
       ]
     },
@@ -48,16 +47,23 @@ export default class IndexRoute extends Route {
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         'name': '',
-        'index': -1
+        'index': 0
       }
       this.toggleSidebar()
       while (this.optionsOpen){
         await App.sleep(100)
       }
     }).then(() => {
-      let res = this.editableProperty.name
+      const res = this.editableProperty.name
+      const index = this.editableProperty.index
       this.editableProperty = null
-      return res
+      return {
+        index: index,
+        data: {
+          node: res,
+          items:[]
+        }
+      }
     })
   }
 
@@ -70,8 +76,7 @@ export default class IndexRoute extends Route {
       'node': 'characteristic 0',
       'items': [
         {
-          'node': '0',
-          'canAdd': false
+          'node': '0'
         },
       ]
     },
@@ -86,7 +91,27 @@ export default class IndexRoute extends Route {
 
   @action
   charsTreeViewShowModalAction(){
-
+    return App.sleep(0).then(async () => {
+      this.editableProperty = {
+        'name': '',
+        'index': 0
+      }
+      this.toggleSidebar()
+      while (this.optionsOpen){
+        await App.sleep(100)
+      }
+    }).then(() => {
+      const res = this.editableProperty.name
+      const index = this.editableProperty.index
+      this.editableProperty = null
+      return {
+        index: index,
+        data: {
+          node: res,
+          items:[]
+        }
+      }
+    })
   }
 
   //endregion

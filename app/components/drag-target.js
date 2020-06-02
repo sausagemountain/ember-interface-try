@@ -7,6 +7,8 @@ import App from "../app";
 export default class DragTargetComponent extends Component {
   constructor() {
     super(...arguments);
+    if(this.args.elementsCollection)
+      this.elementsCollection = this.args.elementsCollection
 
     if (this.args.Name)
       this.elementsCookieName = this.args.Name + 'Cookie'

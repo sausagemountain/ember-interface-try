@@ -1,10 +1,11 @@
 <button {{action this.clear}} class="float-left">Clear</button>
 <br/>
-<div {{on 'drop' (fn this.onDrop)}} {{on 'dragover' (fn this.onDragOver)}} class="drag-target">
+<div {{on 'drop' (fn this.onDrop)}} {{on 'dragover' (fn this.onDragOver)}} class="flex-col hundred pad1px drag-target">
   {{#each elementsCollection as |elem|}}
-    <RemovableListItem @list={{elementsCollection}} @item={{elem}}>
-      <span>{{elem}}</span>
-    </RemovableListItem>
-    <br/>
+    <div class="mar1px one-third h15 graph-container hundred block">
+      <RemovableListItem @class="float-right graph-close">
+        <Graph @data={{elem.data}} @options={{elem.options}} @type={{elem.type}}/>
+      </RemovableListItem>
+    </div>
   {{/each}}
 </div>

@@ -7,8 +7,8 @@ import config from './config/environment';
 export default class App extends Application {
   constructor() {
     super(...arguments);
+    document.app = App;
   }
-
 
   static sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -54,19 +54,18 @@ export default class App extends Application {
     const path = 'path=/;';
     const sameSite = 'SameSite=Strict;'
     document.cookie = name + '=' + App.encodeCookieValue(value) + ';' + expires + path + sameSite
-
   }
 
   static getCookieObject(){
     const ca = document.cookie.split(';')
     let cookie = {}
-    for (let i = 0; i <ca.length; i++) {
+    for (let i = 0; i < ca.length; i++) {
       let c = ca[i]
       while (c.charAt(0) === ' ') {
         c = c.substring(1)
       }
       let cName = c.substring(0, c.indexOf('='))
-      cookie[cName] = App.decodeCookieValue(c.substring(cName.length))
+      cookie[cName] = App.decodeCookieValue(c.substring(cName.length + 1))
     }
     return cookie
   }

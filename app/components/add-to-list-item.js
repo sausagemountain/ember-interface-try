@@ -7,7 +7,12 @@ export default class AddToListItemComponent extends Component {
     if (this.args.action) {
       let result = await this.args.action()
       if (result) {
-        this.args.list.pushObject(result)
+        if(result.index) {
+          this.args.list.insertAt(result.index, result.data)
+        }
+        else {
+          this.args.list.pushObject(result.data)
+        }
 
         if (this.args.onChange)
           await this.args.onChange()

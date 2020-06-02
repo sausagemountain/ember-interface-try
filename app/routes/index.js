@@ -134,9 +134,62 @@ export default class IndexRoute extends Route {
 
   //region graphs
 
+  @tracked
+  graphsData = [
+    {
+      data: [
+        ['Kek Data', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
+        ['a', 240, 150, 60],
+        ['b', 140, 250, 160],
+        ['c', 340, 50, 260]
+      ],
+      options: {
+        title: 'Kek chart',
+        height: '100%',
+        width: '100%',
+      },
+      type: 'Table'
+    },
+    {
+      data: [
+        ['Kek Data', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
+        ['a', 240, 150, 60],
+        ['b', 140, 250, 160],
+        ['c', 340, 50, 260]
+      ],
+      options: {
+        title: 'Kek chart',
+        height: '100%',
+        width: '100%',
+        seriesType: 'scatter',
+        series:{
+          0:{type:'line', curveType: 'function'},
+          1:{type:'area'},
+          2:{type:'bars'}
+        }
+      },
+      type: 'Combo'
+    },
+    {
+      data: [
+        ['Kek Data', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
+        ['a', 240, 150, 60],
+        ['b', 140, 250, 160],
+        ['c', 340, 50, 260]
+      ],
+      options: {
+        title: 'Kek chart',
+        height: '100%',
+        width: '100%',
+      },
+      type: 'Bar'
+    }
+  ]
+
   addGraph(){
 
   }
+
   debug() {
     console.log(1)
   }

@@ -11,7 +11,7 @@
   </Sidebar>
   <main>
     <button {{action model.addGraph}} class="float-left">Add Graph</button>
-    <DragTarget></DragTarget>
+    <DragTarget @elementsCollection={{model.graphsData}}></DragTarget>
   </main>
   <Sidebar @right={{true}} @open={{model.optionsOpen}} @onToggle={{model.toggleSidebar}} @cantShow={{true}}>
     {{#if model.optionsOpen}}

@@ -26,7 +26,7 @@ export default class TreeviewInternalComponent extends Component {
   items = A([])
 
   @tracked
-  isDisplayed=true
+  isDisplayed=false
 
   get path() {
     if (this.args.parent)

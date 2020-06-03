@@ -1,9 +1,28 @@
-{{#each-in this.props as |key value|}}
-  <label>
-    <span>
-      {{key}}
-    </span>
-    <Input @value={{value.val}} @type={{value.type}} pattern={{value.regex}} @focusOut={{fn this.update @properties key}} @enter={{fn this.enter @properties key}}/>
-  </label>
-  <br/>
-{{/each-in}}
+<h3 class="text-right">{{@title}}</h3>
+<div class="flex-row">
+  {{#each-in this.props as |key value|}}
+    {{#if value.object}}
+      <PropertiesEditor @properties={{value.val}} @title={{key}}/>
+      <hr/>
+    {{else}}
+      <label class="normal">
+        <span>
+          {{key}}
+        </span>
+        {{#if value.options}}
+          <select class="flexG1">
+            {{#each value.options as |val|}}
+              <option>{{val}}</option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{#if value.checkbox}}
+            <Input @type={{value.type}} @checked={{value.val}} @focusOut={{fn this.update @properties key}}/>
+          {{else}}
+            <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} @focusOut={{fn this.update @properties key}}/>
+          {{/if}}
+        {{/if}}
+      </label>
+    {{/if}}
+  {{/each-in}}
+</div>

@@ -22,7 +22,7 @@
       {{/if}}
     {{/if}}
   </button>
-  <div class="{{unless @open 'collapsed' ''}}">
+  <div class="{{unless @open 'collapsed' ''}} {{@class}}">
     {{yield}}
   </div>
 </div>

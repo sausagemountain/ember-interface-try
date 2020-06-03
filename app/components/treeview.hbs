@@ -1,4 +1,4 @@
-<ul class="tree-view">
+<ul class="tree-view {{@class}}">
   {{#if this.items.length}}
     {{#each this.items as |item index|}}
       <TreeviewInternal @node={{item}} @index={{index}} @parent={{this}} @action={{@action}} @onChangeContents={{@onChangeContents}}>
@@ -12,7 +12,7 @@
   {{/if}}
   {{#unless @noAddButton}}
     <li>
-      <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}> Add Item</AddToListItem>
+      <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}} @class={{'float-right'}}> Add Item</AddToListItem>
     </li>
   {{/unless}}
 </ul>

@@ -1,35 +1,33 @@
 {{#if @node}}
   <li>
-    <div class="inline-block">
-      {{#if this.items}}
-          <div {{action 'toggleDisplay'}} class="no-select tree-view-expander">{{if isDisplayed '↘' '➡'}}</div>
-      {{/if}}
-      {{#if this.canAdd}}
-        {{#if this.canRemove}}
-          <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}>
-            <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}}>
-              {{yield}}
-            </RemovableListItem>
-          </AddToListItem>
-        {{else}}
-          <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}}>
-            {{yield}}
-          </AddToListItem>
-        {{/if}}
-      {{else}}
-        {{#if this.canRemove}}
-          <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}}>
+    {{#if this.items}}
+      <div {{action this.toggleDisplay}} class="no-select tree-view-expander">{{if this.isDisplayed '↘' '➡'}}</div>
+    {{/if}}
+    {{#if this.canAdd}}
+      {{#if this.canRemove}}
+        <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}} @class={{'float-right'}}>
+          <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}} @class={{'float-right'}}>
             {{yield}}
           </RemovableListItem>
-        {{else}}
+        </AddToListItem>
+      {{else}}
+        <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}} @class={{'float-right'}}>
           {{yield}}
-        {{/if}}
+        </AddToListItem>
       {{/if}}
-    </div>
+    {{else}}
+      {{#if this.canRemove}}
+        <RemovableListItem @list={{@parent.items}} @index={{@index}} @onChange={{@onChangeContents}} @class={{'float-right'}}>
+          {{yield}}
+        </RemovableListItem>
+      {{else}}
+        {{yield}}
+      {{/if}}
+    {{/if}}
   </li>
   {{#if this.items.length}}
-    {{#if isDisplayed}}
-        <li class="{{unless isDisplayed 'collapsed'}}">
+    {{#if this.isDisplayed}}
+        <li class="{{unless this.isDisplayed 'collapsed'}}">
           <Treeview @tree={{this.items}} @parent={{this}} @noAddButton={{true}} @action={{@action}} @onChangeContents={{@onChangeContents}}/>
         </li>
     {{/if}}

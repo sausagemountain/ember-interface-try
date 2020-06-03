@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import {tracked} from "@glimmer/tracking";
 import {get, set} from 'idb-keyval'
 import App from "../app";
+import {readData} from "../excel-transformer";
 
 export default class IndexRoute extends Route {
   async model() {
@@ -212,8 +213,13 @@ export default class IndexRoute extends Route {
     }
   ]
 
-  addGraph(){
-
+  addGraph(event){
+    const files = event.target.files;
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(files[0])
+    reader.onloadend = () => {
+      readData(reader.result)
+    }
   }
 
   debug() {

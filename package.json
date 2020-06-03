@@ -60,6 +60,7 @@
     "edition": "octane"
   },
   "dependencies": {
+    "idb-keyval": "^3.2.0",
     "sheetjs": "^2.0.0"
   }
 }

@@ -1,115 +1,135 @@
 import Route from '@ember/routing/route'
 import { action } from '@ember/object';
 import {tracked} from "@glimmer/tracking";
+import {get, set} from 'idb-keyval'
 import App from "../app";
 
 export default class IndexRoute extends Route {
-  constructor() {
-    super(...arguments);
-
+  async model() {
     this.last = this.last.bind(this)
+    this.toggleSidebar = this.toggleSidebar.bind(this)
 
-    const markers = App.getCookie(this.markerTreeViewContentsCookie)
-    if (markers)
-      this.markers = markers
+    await get(this.markerDataKey).then(val => {
+      if (val) {
+        this.markers = val
+      }
+    })
+    await get(this.charsDataKey).then(val => {
+      if (val) {
+        this.characteristics = val
+      }
+    })
+    await get(this.graphsDataKey).then(val => {
+      if (val) {
+        this.graphsData = val
+      }
+    })
 
-    const chars = App.getCookie(this.charsTreeViewCookie)
-    if (chars)
-      this.characteristics = chars
+    return this;
   }
 
   //region markerTreeView
 
+  markerDataKey = "markerDataKey"
+
+  @action
+  async saveMarkerTreeViewCookie() {
+    await set(this.markerDataKey, this.markers)
+  }
+
   markers = [
     {
-      'node': 'test 0',
-      'canAdd': true,
-      'items': [
+      node: 'test 0',
+      canAdd: true,
+      items: [
         {
-          'node': '0'
+          node: '0',
         },
-      ]
+      ],
     },
   ]
 
-  markerTreeViewContentsCookie = "markerTreeViewContentsCookie"
-
   @action
-  saveMarkerTreeViewCookie() {
-    App.setCookie(this.markerTreeViewContentsCookie, this.markers)
-  }
-
-  @tracked
-  editableProperty = null
-
-  @action
-  markerTreeViewShowModalAction() {
+  addToMarkers() {
     return App.sleep(0).then(async () => {
       this.editableProperty = {
-        'name': '',
-        'index': 0
+        name: '',
+        index: null,
       }
+      this.propName = 'Edit List Item'
       this.toggleSidebar()
       while (this.optionsOpen){
         await App.sleep(100)
       }
     }).then(() => {
-      const res = this.editableProperty.name
-      const index = this.editableProperty.index
+      const { name, index } = this.editableProperty
       this.editableProperty = null
-      return {
-        index: index,
-        data: {
-          node: res,
-          items:[]
+      if(name.trim() !== '') {
+        return {
+          index: index,
+          data: {
+            node: name,
+            items: [],
+          },
         }
+      }
+      else {
+        return null
       }
     })
   }
+
+  @tracked
+  propName = ''
+
+  @tracked
+  editableProperty = null
 
   //endregion
 
   //region characteristicsTreeView
 
+  charsDataKey = "charsDataKey"
+
+  @action
+  async saveCharTreeViewCookie() {
+    await set(this.charsDataKey, this.characteristics).then(() => {})
+  }
+
   characteristics = [
     {
-      'node': 'characteristic 0',
-      'items': [
-        {
-          'node': '0'
-        },
-      ]
+      node: 'characteristic 0',
+      canAdd: false
     },
   ]
 
-  charsTreeViewCookie = "charTreeViewContentsCookie"
-
   @action
-  saveCharTreeViewCookie() {
-    App.setCookie(this.charsTreeViewCookie, this.characteristics)
-  }
-
-  @action
-  charsTreeViewShowModalAction(){
+  addToCharacteristics() {
     return App.sleep(0).then(async () => {
       this.editableProperty = {
-        'name': '',
-        'index': 0
+        name: '',
+        index: 0,
       }
+      this.propName = 'Edit List Item'
       this.toggleSidebar()
       while (this.optionsOpen){
         await App.sleep(100)
       }
     }).then(() => {
-      const res = this.editableProperty.name
-      const index = this.editableProperty.index
+      const { name, index } = this.editableProperty
       this.editableProperty = null
-      return {
-        index: index,
-        data: {
-          node: res,
-          items:[]
+      if(name.trim() !== '') {
+        return {
+          index: index,
+          data: {
+            node: name,
+            canAdd: false,
+            items: [],
+          },
         }
+      }
+      else {
+        return null
       }
     })
   }
@@ -124,7 +144,7 @@ export default class IndexRoute extends Route {
   @tracked
   optionsOpen = false
 
-  @action
+  //@action
   toggleSidebar() {
     this.markersOpen = !this.markersOpen
     this.optionsOpen = !this.optionsOpen
@@ -133,6 +153,12 @@ export default class IndexRoute extends Route {
   //endregion
 
   //region graphs
+
+  graphsDataKey = 'graphsDataKey'
+
+  async saveGraphsDataCookie(){
+    await set(this.graphsDataKey, this.graphsData).then(() => {})
+  }
 
   @tracked
   graphsData = [
@@ -199,9 +225,4 @@ export default class IndexRoute extends Route {
   }
 
   //endregion
-
-
-  model() {
-    return this;
-  }
 }

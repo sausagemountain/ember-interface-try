@@ -1,21 +1,15 @@
 <div class="flex-col">
-  <Sidebar @open={{model.markersOpen}} @onToggle={{model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}}>
-    <div>
-      <h1>index page</h1>
-      <Treeview @tree={{model.markers}} @action={{model.markerTreeViewShowModalAction}} @onChangeContents={{model.saveMarkerTreeViewCookie}}/>
-    </div>
-    <br/>
-    <div>
-      <Treeview @tree={{model.characteristics}} @action={{model.charsTreeViewShowModalAction}} @onChangeContents={{model.saveCharTreeViewCookie}}/>
-    </div>
+  <Sidebar @open={{@model.markersOpen}} @onToggle={{@model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}} @class={{'grid sidebar-inner four-row'}}>
+    <h1 class="areaA">Index Page</h1>
+    <Treeview @tree={{@model.markers}} @action={{@model.addToMarkers}} @onChangeContents={{@model.saveMarkerTreeViewCookie}} @class={{'areaB'}}/>
+    <Treeview @tree={{@model.characteristics}} @action={{@model.addToCharacteristics}} @onChangeContents={{@model.saveCharTreeViewCookie}} @class={{'areaD'}}/>
   </Sidebar>
   <main>
-    <button {{action model.addGraph}} class="float-left">Add Graph</button>
-    <DragTarget @elementsCollection={{model.graphsData}}></DragTarget>
+    <DragTarget @elementsCollection={{@model.graphsData}} @addItem={{@model.addGraph}}></DragTarget>
   </main>
-  <Sidebar @right={{true}} @open={{model.optionsOpen}} @onToggle={{model.toggleSidebar}} @cantShow={{true}}>
-    {{#if model.optionsOpen}}
-      <PropertiesEditor @properties={{model.editableProperty}} @enter={{model.debug}} @lastEnter={{model.last}}/>
+  <Sidebar @right={{true}} @open={{@model.optionsOpen}} @onToggle={{@model.toggleSidebar}} @cantShow={{true}}>
+    {{#if @model.optionsOpen}}
+      <PropertiesEditor @properties={{@model.editableProperty}} @title={{@model.propName}}/>
     {{/if}}
   </Sidebar>
 </div>

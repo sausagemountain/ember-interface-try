@@ -18,61 +18,52 @@ export default class App extends Application {
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver;
 
-  static encodeCookieValue(val) {
+  static encodeUrl(val) {
     if (!val)
       return ''
-    const json = JSON.stringify(val)
-    return encodeURIComponent(json)
+    return encodeURIComponent(this.stringify(val))
   }
 
-  static decodeCookieValue(val) {
+  static stringify(val) {
+    if (!val)
+      return ''
+    return JSON.stringify(val)
+  }
+
+  static decodeUrl(val) {
     if (!val)
       return null
-    const decoded = decodeURIComponent(val)
-    return JSON.parse(decoded)
+    return this.unStringify(decodeURIComponent(val))
+  }
+
+  static unStringify(val) {
+    if (!val)
+      return null
+    return JSON.parse(val)
+  }
+
+  static setCookie(name, value) {
+    window.localStorage[name] = this.stringify(value)
   }
 
   static getCookie(name){
-    const nm = name + "="
-    const ca = document.cookie.split(';')
-    for (let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') {
-        c = c.substring(1)
-      }
-      if (c.indexOf(nm) === 0) {
-        return App.decodeCookieValue(c.substring(nm.length))
-      }
-    }
-    return ""
-  }
-
-  static setCookie(name, value, exDays = 1) {
-    let d = new Date()
-    d.setTime(d.getTime() + (exDays * 24 * 60 * 60 * 1000))
-    const expires = 'expires' + '=' + d.toUTCString() + ';';
-    const path = 'path=/;';
-    const sameSite = 'SameSite=Strict;'
-    document.cookie = name + '=' + App.encodeCookieValue(value) + ';' + expires + path + sameSite
+    return this.unStringify(window.localStorage[name])
   }
 
   static getCookieObject(){
-    const ca = document.cookie.split(';')
-    let cookie = {}
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i]
-      while (c.charAt(0) === ' ') {
-        c = c.substring(1)
-      }
-      let cName = c.substring(0, c.indexOf('='))
-      cookie[cName] = App.decodeCookieValue(c.substring(cName.length + 1))
+    let res = {}
+    for (let key in window.localStorage) {
+      res[key] = this.getCookie(key)
     }
-    return cookie
+    return res;
   }
 
-  static setCookieObject(object, exDays = 1){
-    for (let i in object) {
-      this.setCookie(i, object[i], exDays)
+  static setCookieObject(myObject){
+    for (let i in myObject) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (myObject.hasOwnProperty(i)) {
+        this.setCookie(i, myObject[i])
+      }
     }
   }
 }

@@ -1,6 +1,13 @@
 html {
   font-family: "Segoe UI", "Segoe UI Emoji", "Helvetica Neue", "Helvetica", sans-serif;
   box-sizing: border-box;
+  background: linear-gradient(to right, rgba(41, 105, 225, 0.5), rgba(0, 191, 255, 0.5), rgba(147, 112, 219, 0.5), rgba(139, 0, 139, 0.5));
+}
+
+body{
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
 * {
@@ -34,11 +41,20 @@ ul.tree-view li {
 }
 
 button.sneaky {
-  margin: 0;
-  padding: 0;
+  margin: 0 1px;
+  padding: 1px;
   border: 2px solid lightgray;
   background: lightgray;
   cursor: pointer;
+  text-align: center;
+  height: 1.8em;
+  width: 1.8em;
+}
+
+
+button.sneaky.default-width {
+  padding: 0 0.3em;
+  width: unset;
 }
 
 button.sneaky:hover {
@@ -118,7 +134,8 @@ main {
 
 .drag-target {
   background-color: rgba(0, 0, 0, 0.1);
-  min-height: 20em;
+  border-radius: 0.5em;
+  min-height: 40em;
 }
 
 .modal-base {
@@ -145,9 +162,9 @@ main {
 }
 
 .graph-container{
-  padding: 1.6em 0.3em 0.4em 0.3em;
-  border-radius: 0.3em;
-  background: rgba(0, 0, 0, 0.1);
+  padding: 1.8em 0.3em 0.3em 0.3em;
+  border-radius: 0.5em;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .hundred{
@@ -168,7 +185,7 @@ main {
 }
 
 button.graph-close{
-  margin-top: -1.7em;
+  margin-top: -1.9em;
 }
 
 .pad1px{
@@ -177,4 +194,56 @@ button.graph-close{
 
 .mar1px{
   margin: 1px;
+}
+
+.br25{
+  border-radius: 25%;
+}
+
+.br5p{
+  border-radius: 5px;
+}
+
+.br10p {
+  border-radius: 10px;
+}
+
+.no-float {
+  float: none;
+}
+
+.grid {
+  display: grid;
+}
+
+.four-row {
+  grid-template: 'A'
+  'B'
+  'C'
+  'D';
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.sidebar-inner{
+  height: 100%;
+}
+
+.sidebar-inner.four-row {
+  grid-template-rows: auto 1fr 1fr 1fr;
+}
+
+.areaA {
+  grid-area: A;
+}
+
+.areaB {
+  grid-area: B;
+}
+
+.areaC {
+  grid-area: C;
+}
+
+.areaD {
+  grid-area: D;
 }

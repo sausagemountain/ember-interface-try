@@ -1,7 +1,7 @@
 <ul class="tree-view {{@class}}">
   {{#if this.items.length}}
     {{#each this.items as |item index|}}
-      <TreeviewInternal @node={{item}} @index={{index}} @parent={{this}} @action={{@action}} @onChangeContents={{@onChangeContents}}>
+      <TreeviewInternal @node={{item}} @index={{index}} @parent={{this}} @action={{@action}} @edit={{@edit}} @onChangeContents={{@onChangeContents}}>
         {{#if item.node}}
           {{item.node}}
         {{else}}

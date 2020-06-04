@@ -9,12 +9,15 @@
     {{#if this.canAdd}}
       <AddToListItem @list={{this.items}} @action={{@action}} @onChange={{@onChangeContents}} @class={{'float-right'}} @defaultVal={{this.newItem}}/>
     {{/if}}
+    {{#if this.canEdit}}
+      <EditPropertyButton @action={{@edit}} @class={{'float-right'}} @value={{this.currentItem}}/>
+    {{/if}}
     {{yield}}
   </li>
   {{#if this.items.length}}
     {{#if this.isDisplayed}}
         <li class="{{unless this.isDisplayed 'collapsed'}}">
-          <Treeview @tree={{this.items}} @parent={{this}} @noAddButton={{if @node.addButton false true}} @action={{@action}} @onChangeContents={{@onChangeContents}}/>
+          <Treeview @tree={{this.items}} @parent={{this}} @noAddButton={{if @node.addButton false true}} @action={{@action}} @edit={{@edit}} @onChangeContents={{@onChangeContents}}/>
         </li>
     {{/if}}
   {{/if}}

@@ -5,7 +5,7 @@ export default class SidebarComponent extends Component {
     super(...arguments);
   }
 
-  toggleOpen() {
+  toggleOpen = () => {
     this.args.onToggle()
   }
 }

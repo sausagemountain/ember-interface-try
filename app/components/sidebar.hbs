@@ -1,28 +1,30 @@
 <div class="{{if @open 'sidebar' ''}}">
-  <button {{action this.toggleOpen}} class="sidebar-toggle {{if @right 'float-left' 'float-right'}}">
-    {{#if @right}}
-      {{#if @open}}
-        {{#unless @cantHide}}
-          ▶
-        {{/unless}}
+  <div class="hundred">
+    <button {{on 'click' this.toggleOpen}} type="button" class="sidebar-toggle z5 {{if @right 'float-left' 'float-right'}}">
+      {{#if @right}}
+        {{#if @open}}
+          {{#unless @cantHide}}
+            ▶
+          {{/unless}}
+        {{else}}
+          {{#unless @cantShow}}
+            ◀
+          {{/unless}}
+        {{/if}}
       {{else}}
-        {{#unless @cantShow}}
-          ◀
-        {{/unless}}
+        {{#if @open}}
+          {{#unless @cantHide}}
+            ◀
+          {{/unless}}
+        {{else}}
+          {{#unless @cantShow}}
+            ▶
+          {{/unless}}
+        {{/if}}
       {{/if}}
-    {{else}}
-      {{#if @open}}
-        {{#unless @cantHide}}
-          ◀
-        {{/unless}}
-      {{else}}
-        {{#unless @cantShow}}
-          ▶
-        {{/unless}}
-      {{/if}}
-    {{/if}}
-  </button>
-  <div class="{{unless @open 'collapsed' ''}} {{@class}}">
-    {{yield}}
+    </button>
+    <div class="{{unless @open 'collapsed' ''}} {{@class}}">
+      {{yield}}
+    </div>
   </div>
 </div>

@@ -3,13 +3,11 @@ import { action } from '@ember/object';
 import {tracked} from "@glimmer/tracking";
 import {get, set} from 'idb-keyval'
 import App from "../app";
+import {A} from '@ember/array'
 import {readData} from "../excel-transformer";
 
 export default class IndexRoute extends Route {
-  async model() {
-    this.last = this.last.bind(this)
-    this.toggleSidebar = this.toggleSidebar.bind(this)
-
+  model = async () => {
     await get(this.markerDataKey).then(val => {
       if (val) {
         this.markers = val
@@ -26,6 +24,12 @@ export default class IndexRoute extends Route {
       }
     })
 
+    App.repeat(30000, () => {
+      this.saveMarkerTreeViewCookie()
+      this.saveCharTreeViewCookie()
+      this.saveGraphsDataCookie()
+    })
+
     return this;
   }
 
@@ -33,29 +37,32 @@ export default class IndexRoute extends Route {
 
   markerDataKey = "markerDataKey"
 
-  @action
-  async saveMarkerTreeViewCookie() {
+  saveMarkerTreeViewCookie = async () => {
     await set(this.markerDataKey, this.markers)
   }
 
-  markers = [
+  @tracked
+  markers = A([
     {
       node: 'test 0',
-      canAdd: true,
+      data: [],
       items: [
         {
-          node: '0',
+          canAdd: false,
+          node: 'item 0',
+          data:[]
         },
       ],
     },
-  ]
+  ])
 
-  @action
-  addToMarkers() {
+  addToMarkers = (defaultVal) => {
+    console.log(defaultVal.path)
+    console.log(defaultVal.path.split('').filter(e => e === '/').length <= 1)
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         name: '',
-        index: null,
+        index: defaultVal.index,
       }
       this.propName = 'Edit List Item'
       this.toggleSidebar()
@@ -70,6 +77,8 @@ export default class IndexRoute extends Route {
           index: index,
           data: {
             node: name,
+            canAdd: defaultVal.path.split('').filter(e => e === '/').length <= 1,
+            data: [],
             items: [],
           },
         }
@@ -92,24 +101,25 @@ export default class IndexRoute extends Route {
 
   charsDataKey = "charsDataKey"
 
-  @action
-  async saveCharTreeViewCookie() {
+  saveCharTreeViewCookie = async () => {
     await set(this.charsDataKey, this.characteristics).then(() => {})
   }
 
-  characteristics = [
+  @tracked
+  characteristics = A([
     {
       node: 'characteristic 0',
+      data: [],
       canAdd: false
     },
-  ]
+  ])
 
-  @action
-  addToCharacteristics() {
+
+  addToCharacteristics = (defaultVal) => {
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         name: '',
-        index: 0,
+        index: defaultVal.index,
       }
       this.propName = 'Edit List Item'
       this.toggleSidebar()
@@ -124,8 +134,8 @@ export default class IndexRoute extends Route {
           index: index,
           data: {
             node: name,
+            data: [],
             canAdd: false,
-            items: [],
           },
         }
       }
@@ -145,8 +155,8 @@ export default class IndexRoute extends Route {
   @tracked
   optionsOpen = false
 
-  //@action
-  toggleSidebar() {
+  //
+  toggleSidebar = () => {
     this.markersOpen = !this.markersOpen
     this.optionsOpen = !this.optionsOpen
   }
@@ -157,15 +167,15 @@ export default class IndexRoute extends Route {
 
   graphsDataKey = 'graphsDataKey'
 
-  async saveGraphsDataCookie(){
+  saveGraphsDataCookie = async () => {
     await set(this.graphsDataKey, this.graphsData).then(() => {})
   }
 
   @tracked
-  graphsData = [
+  graphsData = A([
     {
       data: [
-        ['Kek Data', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
+        ['', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
         ['a', 240, 150, 60],
         ['b', 140, 250, 160],
         ['c', 340, 50, 260]
@@ -179,7 +189,7 @@ export default class IndexRoute extends Route {
     },
     {
       data: [
-        ['Kek Data', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
+        ['', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
         ['a', 240, 150, 60],
         ['b', 140, 250, 160],
         ['c', 340, 50, 260]
@@ -199,7 +209,7 @@ export default class IndexRoute extends Route {
     },
     {
       data: [
-        ['Kek Data', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
+        ['', 'Lorem ipsum', 'Dolor sit', 'Sit amet'],
         ['a', 240, 150, 60],
         ['b', 140, 250, 160],
         ['c', 340, 50, 260]
@@ -211,22 +221,34 @@ export default class IndexRoute extends Route {
       },
       type: 'Bar'
     }
-  ]
+  ])
 
-  addGraph(event){
+  addGraph = (event) => {
     const files = event.target.files;
     const reader = new FileReader()
     reader.readAsArrayBuffer(files[0])
     reader.onloadend = () => {
-      readData(reader.result)
+      const data = readData(reader.result)
+      for (let key in data) {
+        this.graphsData.pushObject(
+          {
+            data: data[key],
+            options: {
+              title: key,
+              height: '100%',
+              width: '100%',
+            },
+            type: 'Table'
+          })
+      }
     }
   }
 
-  debug() {
+  debug = () => {
     console.log(1)
   }
 
-  last() {
+  last = () => {
     this.toggleSidebar()
   }
 

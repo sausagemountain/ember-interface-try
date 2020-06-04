@@ -20,7 +20,7 @@ export default class DragTargetComponent extends Component {
 
   @action
   addItem() {
-    this.args.addItem()
+    this.args.addItem(...arguments)
   }
 
   @action

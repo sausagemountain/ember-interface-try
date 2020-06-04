@@ -1,7 +1,6 @@
-<input type="file" accept=".xls,.xlsx,.xlsb,.xlsm" class="sneaky no-select" {{on 'change' @addItem}}/>
-<button {{action this.clear}} type="button" class="sneaky default-width no-select br5p">Clear</button>
-<br/>
-<div {{on 'drop' (fn this.onDrop)}} {{on 'dragover' (fn this.onDragOver)}} class="flex-col hundred pad1px drag-target">
+<input type="file" accept=".xls,.xlsx,.xlsb,.xlsm" class="sneaky no-select areaB" {{on 'change' this.addItem}}/>
+<button {{action this.clear}} type="button" class="sneaky default-width no-select br5p areaC">Clear</button>
+<div {{on 'drop' (fn this.onDrop)}} {{on 'dragover' (fn this.onDragOver)}} class="flex-col hundred pad5px drag-target areaA">
   {{#each this.elementsCollection as |elem index|}}
     <div class="mar1px one-third h15 graph-container hundred block">
       <RemovableListItem @class="float-right graph-close" @index={{index}} @list={{this.elementsCollection}}>

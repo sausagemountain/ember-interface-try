@@ -1,11 +1,13 @@
-<div class="flex-col">
-  <Sidebar @open={{@model.markersOpen}} @onToggle={{@model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}} @class={{'grid sidebar-inner four-row'}}>
-    <h1 class="areaA">Index Page</h1>
+<div class="flex-col hundred index">
+  <Sidebar @open={{@model.markersOpen}} @onToggle={{@model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}} @class={{'grid sidebar-inner four-row over-scroll fixed'}}>
+    <div class="areaA">
+      <h1>Index Page</h1>
+    </div>
     <Treeview @tree={{@model.markers}} @action={{@model.addToMarkers}} @onChangeContents={{@model.saveMarkerTreeViewCookie}} @class={{'areaB'}}/>
     <Treeview @tree={{@model.characteristics}} @action={{@model.addToCharacteristics}} @onChangeContents={{@model.saveCharTreeViewCookie}} @class={{'areaD'}}/>
   </Sidebar>
-  <main>
-    <DragTarget @elementsCollection={{@model.graphsData}} @addItem={{@model.addGraph}}></DragTarget>
+  <main class="index">
+    <DragTarget @elementsCollection={{@model.graphsData}} @addItem={{@model.addGraph}}/>
   </main>
   <Sidebar @right={{true}} @open={{@model.optionsOpen}} @onToggle={{@model.toggleSidebar}} @cantShow={{true}}>
     {{#if @model.optionsOpen}}
@@ -13,5 +15,4 @@
     {{/if}}
   </Sidebar>
 </div>
-
 {{outlet}}

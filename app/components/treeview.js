@@ -12,9 +12,16 @@ export default class TreeviewComponent extends Component {
   @tracked
   items = A([])
 
+  get newItem(){
+    return {
+      index: this.items.length,
+      path: this.path
+    }
+  }
+
   get path() {
     if (this.args.parent)
-      return this.args.parent.path + '/'
-    return ''
+      return this.args.parent.path
+    return '/'
   }
 }

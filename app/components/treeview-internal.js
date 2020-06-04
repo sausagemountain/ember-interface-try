@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import {tracked} from "@glimmer/tracking";
-import { action } from '@ember/object';
 import {A} from '@ember/array'
 
 export default class TreeviewInternalComponent extends Component {
@@ -28,6 +27,13 @@ export default class TreeviewInternalComponent extends Component {
   @tracked
   isDisplayed=false
 
+  get newItem(){
+    return {
+      index: this.items.length,
+      path: this.path
+    }
+  }
+
   get path() {
     if (this.args.parent)
       {
@@ -36,13 +42,13 @@ export default class TreeviewInternalComponent extends Component {
           s += this.args.node.node
         else
           s += this.args.node
+        s += '/'
         return s
       }
     return ''
   }
 
-  @action
-  toggleDisplay() {
+  toggleDisplay = () => {
     this.isDisplayed = !this.isDisplayed
   }
 }

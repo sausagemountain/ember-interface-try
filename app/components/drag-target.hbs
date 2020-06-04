@@ -1,5 +1,6 @@
-<button {{on 'click' this.addItem}} type="button" class="sneaky default-width no-select br5p areaB">Add Graph</button>
-<button {{on 'click' this.clear}} type="button" class="sneaky default-width no-select br5p areaC">Clear</button>
+<button {{on 'click' this.addItem}} type="button" class="sneaky default-width no-select br5p areaB">Добавить элемент</button>
+<button {{on 'click' this.clear}} type="button" class="sneaky default-width no-select br5p areaC">Очистить</button>
+<button {{on 'click' this.save}} type="button" class="sneaky default-width no-select br5p areaD">Сохранить</button>
 <div {{on 'drop' this.onDrop}} {{on 'dragover' this.onDragOver}} class="flex-col hundred pad5px drag-target areaA">
   {{#each this.elementsCollection as |elem index|}}
     <div class="mar1px one-third h15 graph-container hundred block">

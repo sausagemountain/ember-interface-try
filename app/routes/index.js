@@ -45,13 +45,13 @@ export default class IndexRoute extends Route {
   @tracked
   markers = A([
     {
-      node: 'aspect 1',
+      node: 'Аспект 1',
       items: [
         {
-          node: 'marker 1',
+          node: 'Маркер 1',
           items:[
             {
-              node: 'corpus 1',
+              node: 'Корпус 1',
               items:[],
               canAdd: false,
               canEdit: true,
@@ -73,7 +73,7 @@ export default class IndexRoute extends Route {
 
   @action
   addToMarkers(defaultVal) {
-    this.propName = 'Add List Item'
+    this.propName = 'Добавление элемента'
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         name: '',
@@ -108,7 +108,7 @@ export default class IndexRoute extends Route {
 
   @action
   editMarker(defaultVal){
-    this.propName = 'Edit List Item'
+    this.propName = 'Редактирование элемента'
     return App.sleep(0).then(async () => {
       const { name, index, data } = defaultVal;
       this.editableProperty = {
@@ -139,6 +139,16 @@ export default class IndexRoute extends Route {
     })
   }
 
+  @action
+  getMarkerForPath(path, markers){
+    path = path.trim('/').split('/')
+    let res = markers
+    for (let i in path){
+      res = res[i]
+    }
+    return res.data
+  }
+
   @tracked
   propName = ''
 
@@ -159,26 +169,26 @@ export default class IndexRoute extends Route {
   @tracked
   characteristics = A([
     {
-      node: 'characteristics',
+      node: 'Характеристики',
       addButton: true,
       canAdd: false,
       canRemove: false,
       isDisplayed: true,
       items:[
         {
-          node: 'Uses',
+          node: 'Количество Употреблений',
           items:[],
         },
         {
-          node: 'Mode',
+          node: 'Мода',
           items:[],
         },
         {
-          node: 'Median',
+          node: 'Медиана',
           items:[],
         },
         {
-          node: 'Average',
+          node: 'Среднее Значение',
           items:[],
         },
       ],
@@ -264,6 +274,11 @@ export default class IndexRoute extends Route {
   ])
 
   @action
+  addGraph(event){
+    event.target.value;
+  }
+
+  @action
   addData(event) {
     const files = event.target.files;
     const reader = new FileReader()
@@ -284,11 +299,6 @@ export default class IndexRoute extends Route {
       }
       this.saveGraphsDataCookie()
     }
-  }
-
-  @action
-  addGraph(event){
-
   }
 
   @action

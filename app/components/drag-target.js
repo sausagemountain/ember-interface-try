@@ -25,7 +25,12 @@ export default class DragTargetComponent extends Component {
 
   @action
   edit(){
+    this.args.edit()
+  }
 
+  @action
+  save(){
+    this.args.save()
   }
 
   @action

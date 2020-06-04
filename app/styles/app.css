@@ -10,6 +10,10 @@ body {
   border: 0;
 }
 
+h1{
+  text-align: center;
+}
+
 * {
   font-family: inherit;
   box-sizing: inherit;
@@ -18,11 +22,12 @@ body {
 ul.tree-view, ul.tree-view ul {
   list-style-type: none;
   padding-inline-start: unset;
-  margin-inline-start: 2.1em;
+  margin-inline-start: 1.5em;
 }
 
 ul.tree-view li {
   margin: 0.25em 0;
+  margin-inline-start: 0;
 }
 
 .collapsed, .collapsed * {

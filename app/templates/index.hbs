@@ -1,11 +1,7 @@
 <div class="flex-col hundred index">
-  <Sidebar @open={{@model.markersOpen}} @onToggle={{@model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}} @class={{'hundred grid four-row sidebar-inner over-scroll fixed'}}>
+  <Sidebar @open={{@model.markersOpen}} @onToggle={{@model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}} @class={{'hundred grid four-row sidebar-inner over-scroll fixed'}} @buttonClass={{'collapsed'}}>
     <div class="areaA">
-      <h1>Index Page</h1>
-      <label>
-        <span class="sneaky no-select br5p default-width">Add Data</span>
-        <input type="file" accept=".xls,.xlsx,.xlsb,.xlsm" class="collapsed" {{on 'change' @model.addData}}/>
-      </label>
+      <h1>Система визуализации</h1>
     </div>
     <Treeview @tree={{@model.markers}} @action={{@model.addToMarkers}} @onChangeContents={{@model.saveMarkerTreeViewCookie}} @class={{'areaB'}} @edit={{@model.editMarker}}/>
     <Treeview @tree={{@model.characteristics}} @action={{@model.addToMarkers}} @onChangeContents={{@model.saveCharTreeViewCookie}} @noAddButton={{true}} @class={{'areaD'}} @edit={{@model.editMarker}}/>

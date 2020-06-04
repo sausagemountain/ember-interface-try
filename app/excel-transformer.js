@@ -4,17 +4,22 @@ import * as xlsx from 'xlsx';
 export function readData(dataBuffer){
   let result = {}
   const book = xlsx.read(dataBuffer,{
+    type: 'buffer',
     cellDates: true
   })
   for (let sheetName of book.SheetNames) {
-    const sheet = xlsx.utils.sheet_to_json(sheetName)
-    const titles = [...sheet[0].keys()]
-    let array_sheet = [titles];
-    for (let obj of sheet) {
-      const row = []
+    const sheet = book.Sheets[sheetName]
+    const sheetJson = xlsx.utils.sheet_to_json(sheet)
+    const titles = Object.keys(sheetJson[0])
+    const array_sheet = [['', ...titles]];
+    let num = 0
+    for (let obj of sheetJson) {
+      const row = [num++]
       for (let title of titles) {
-        const row = []
-        row.push(obj[title])
+        let val = obj[title]
+        if (typeof val == 'string')
+          val = val.trim().replace('\r',' ').split('\n').map(e => e.trim()).join('\n')
+        row.push(val)
       }
       array_sheet.push(row)
     }

@@ -60,7 +60,6 @@
     "edition": "octane"
   },
   "dependencies": {
-    "html2canvas": "^1.0.0-rc.5",
     "idb-keyval": "^3.2.0",
     "xlsx": "^0.16.1"
   }

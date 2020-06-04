@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 html {
-  font-family: "Segoe UI", "Segoe UI Emoji", "Helvetica Neue", "Helvetica", sans-serif;
+  font-family: "Montserrat", "Segoe UI", "Segoe UI Emoji", "Helvetica Neue", "Helvetica", -apple-system, sans-serif;
   box-sizing: border-box;
   background: linear-gradient(to right, rgba(41, 105, 225, 0.5), rgba(0, 191, 255, 0.5), rgba(147, 112, 219, 0.5), rgba(139, 0, 139, 0.5));
 }
@@ -22,11 +24,11 @@ h1{
 ul.tree-view, ul.tree-view ul {
   list-style-type: none;
   padding-inline-start: unset;
-  margin-inline-start: 1.5em;
+  margin-inline-start: 2em;
 }
 
 ul.tree-view li {
-  margin: 0.25em 0;
+  margin: 0.5em 0;
   margin-inline-start: 0;
 }
 

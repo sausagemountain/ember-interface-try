@@ -1,15 +1,15 @@
 <div class="flex-col hundred index">
-  <Sidebar @open={{@model.markersOpen}} @onToggle={{@model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}} @class={{'grid sidebar-inner four-row over-scroll fixed'}}>
+  <Sidebar @open={{@model.markersOpen}} @onToggle={{@model.toggleSidebar}} @cantHide={{true}} @cantShow={{true}} @class={{'hundred grid four-row sidebar-inner over-scroll fixed'}}>
     <div class="areaA">
       <h1>Index Page</h1>
     </div>
     <Treeview @tree={{@model.markers}} @action={{@model.addToMarkers}} @onChangeContents={{@model.saveMarkerTreeViewCookie}} @class={{'areaB'}}/>
-    <Treeview @tree={{@model.characteristics}} @action={{@model.addToCharacteristics}} @onChangeContents={{@model.saveCharTreeViewCookie}} @class={{'areaD'}}/>
+    <Treeview @tree={{@model.characteristics}} @action={{@model.addToCharacteristics}} @onChangeContents={{@model.saveCharTreeViewCookie}} @noAddButton={{true}} @class={{'areaD'}}/>
   </Sidebar>
   <main class="index">
     <DragTarget @elementsCollection={{@model.graphsData}} @addItem={{@model.addGraph}}/>
   </main>
-  <Sidebar @right={{true}} @open={{@model.optionsOpen}} @onToggle={{@model.toggleSidebar}} @cantShow={{true}}>
+  <Sidebar @right={{true}} @open={{@model.optionsOpen}} @onToggle={{@model.toggleSidebar}} @cantShow={{true}} @class={{'sidebar-inner over-scroll fixed'}}>
     {{#if @model.optionsOpen}}
       <PropertiesEditor @properties={{@model.editableProperty}} @title={{@model.propName}}/>
     {{/if}}

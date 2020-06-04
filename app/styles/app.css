@@ -301,6 +301,7 @@ main.index {
       'A A A';
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr 1fr 1fr;
+  alignment: center;
   margin: 5px;
   min-height: calc(95vh);
   max-height: calc(100% - 10px);
@@ -314,4 +315,8 @@ main.index {
 
 .fixed {
   position: fixed;
+}
+
+.z5 {
+  z-index: 5;
 }

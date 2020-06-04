@@ -44,25 +44,30 @@ export default class IndexRoute extends Route {
   @tracked
   markers = A([
     {
-      node: 'test 0',
+      node: 'aspect 1',
       data: [],
       items: [
         {
-          canAdd: false,
-          node: 'item 0',
-          data:[]
+          node: 'marker 1',
+          data:[],
+          items:[
+            {
+              node: 'corpus 1',
+              items:[],
+              canAdd: false,
+              data:[],
+            },
+          ],
         },
       ],
     },
   ])
 
   addToMarkers = (defaultVal) => {
-    console.log(defaultVal.path)
-    console.log(defaultVal.path.split('').filter(e => e === '/').length <= 1)
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         name: '',
-        index: defaultVal.index,
+        index: defaultVal.index + 1,
       }
       this.propName = 'Edit List Item'
       this.toggleSidebar()
@@ -74,10 +79,10 @@ export default class IndexRoute extends Route {
       this.editableProperty = null
       if(name.trim() !== '') {
         return {
-          index: index,
+          index: index - 1,
           data: {
             node: name,
-            canAdd: defaultVal.path.split('').filter(e => e === '/').length <= 1,
+            canAdd: defaultVal.path.split('').filter(e => e === '/').length < 3,
             data: [],
             items: [],
           },
@@ -108,9 +113,35 @@ export default class IndexRoute extends Route {
   @tracked
   characteristics = A([
     {
-      node: 'characteristic 0',
+      node: 'characteristics',
       data: [],
-      canAdd: false
+      addButton: true,
+      canAdd: false,
+      canRemove: false,
+      isDisplayed: true,
+      items:[
+        {
+          node: 'Uses',
+          data:[],
+          items:[],
+        },
+        {
+          node: 'Mode',
+          data:[],
+          items:[],
+        },
+        {
+          node: 'Median',
+          data:[],
+          items:[
+          ],
+        },
+        {
+          node: 'Average',
+          data:[],
+          items:[],
+        },
+      ],
     },
   ])
 
@@ -119,7 +150,7 @@ export default class IndexRoute extends Route {
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         name: '',
-        index: defaultVal.index,
+        index: defaultVal.index + 1,
       }
       this.propName = 'Edit List Item'
       this.toggleSidebar()
@@ -131,11 +162,12 @@ export default class IndexRoute extends Route {
       this.editableProperty = null
       if(name.trim() !== '') {
         return {
-          index: index,
+          index: index - 1,
           data: {
             node: name,
             data: [],
-            canAdd: false,
+            canAdd: defaultVal.path.split('').filter(e => e === '/').length < 3,
+            items: []
           },
         }
       }
@@ -155,7 +187,6 @@ export default class IndexRoute extends Route {
   @tracked
   optionsOpen = false
 
-  //
   toggleSidebar = () => {
     this.markersOpen = !this.markersOpen
     this.optionsOpen = !this.optionsOpen

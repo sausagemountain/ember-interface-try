@@ -1,11 +1,11 @@
-<input type="file" accept=".xls,.xlsx,.xlsb,.xlsm" class="sneaky no-select areaB" {{on 'change' this.addItem}}/>
-<button {{action this.clear}} type="button" class="sneaky default-width no-select br5p areaC">Clear</button>
-<div {{on 'drop' (fn this.onDrop)}} {{on 'dragover' (fn this.onDragOver)}} class="flex-col hundred pad5px drag-target areaA">
+<button {{on 'click' this.addItem}} type="button" class="sneaky default-width no-select br5p areaB">Add Graph</button>
+<button {{on 'click' this.clear}} type="button" class="sneaky default-width no-select br5p areaC">Clear</button>
+<div {{on 'drop' this.onDrop}} {{on 'dragover' this.onDragOver}} class="flex-col hundred pad5px drag-target areaA">
   {{#each this.elementsCollection as |elem index|}}
     <div class="mar1px one-third h15 graph-container hundred block">
-      <RemovableListItem @class="float-right graph-close" @index={{index}} @list={{this.elementsCollection}}>
-        <Graph @data={{elem.data}} @options={{elem.options}} @type={{elem.type}} @class={{'br10p'}}/>
-      </RemovableListItem>
+      <RemovableListItem @class="float-right graph-close" @index={{index}} @list={{this.elementsCollection}}/>
+      <EditPropertyButton @class="float-right graph-edit" @action={{this.edit}} @value={{null}}/>
+      <Graph @data={{elem.data}} @options={{elem.options}} @type={{elem.type}} @class={{'br10p'}}/>
     </div>
   {{/each}}
 </div>

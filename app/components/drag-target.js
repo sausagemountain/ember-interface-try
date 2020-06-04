@@ -24,6 +24,11 @@ export default class DragTargetComponent extends Component {
   }
 
   @action
+  edit(){
+
+  }
+
+  @action
   onDrop(event) {
     event.preventDefault()
     if (this.args.action !== undefined){

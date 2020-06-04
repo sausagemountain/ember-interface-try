@@ -1,4 +1,6 @@
 import Component from '@glimmer/component';
+import {readData} from "../excel-transformer";
+import { action } from '@ember/object';
 
 export default class PropertiesEditorComponent extends Component {
   constructor() {
@@ -31,7 +33,14 @@ export default class PropertiesEditorComponent extends Component {
         }
         case "object":{
           if (Array.isArray(val)) {
-            a.options = val;
+            if(val.length >= 0){
+              if (Array.isArray(val[0])){
+                a.data = val
+              }
+              else {
+                a.options = val;
+              }
+            }
           }
           else {
             a.object = true;
@@ -45,7 +54,21 @@ export default class PropertiesEditorComponent extends Component {
 
   props = {}
 
+  @action
   update(props, key, event){
     props[key] = event.target.value
+  }
+
+  @action
+  addData(props, key, event) {
+    const files = event.target.files;
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(files[0])
+    reader.onloadend = () => {
+      const data = readData(reader.result)
+      for (let key1 in data) {
+        props[key] = data[key1]
+      }
+    }
   }
 }

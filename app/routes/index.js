@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route'
-import { action } from '@ember/object';
+import {action} from '@ember/object';
 import {tracked} from "@glimmer/tracking";
 import {get, set} from 'idb-keyval'
 import App from "../app";
@@ -24,7 +24,7 @@ export default class IndexRoute extends Route {
       }
     })
 
-    App.repeat(30000, async   () => {
+    App.repeat(10000, async   () => {
       await this.saveMarkerTreeViewCookie()
       await this.saveCharTreeViewCookie()
       await this.saveGraphsDataCookie()
@@ -46,18 +46,16 @@ export default class IndexRoute extends Route {
   markers = A([
     {
       node: 'aspect 1',
-      data: [],
       items: [
         {
           node: 'marker 1',
-          data:[],
           items:[
             {
               node: 'corpus 1',
               items:[],
               canAdd: false,
               canEdit: true,
-              data:[],
+              data:[[]],
             },
           ],
         },
@@ -66,32 +64,41 @@ export default class IndexRoute extends Route {
   ])
 
   @action
+  async waitForOptions(){
+    this.toggleSidebar()
+    while (this.optionsOpen){
+      await App.sleep(100)
+    }
+  }
+
+  @action
   addToMarkers(defaultVal) {
+    this.propName = 'Add List Item'
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         name: '',
         index: defaultVal.index + 1,
+        data: [[]],
       }
-      this.propName = 'Add List Item'
-      this.toggleSidebar()
-      while (this.optionsOpen){
-        await App.sleep(100)
-      }
+      await this.waitForOptions()
     }).then(() => {
-      const { name, index } = this.editableProperty
+      const { name, index, data } = this.editableProperty
       this.editableProperty = null
       const level = defaultVal.path.split('').filter(e => e === '/').length
       if(name.trim() !== '') {
-        return {
+        let res = {
           index: index - 1,
           data: {
             node: name,
             canAdd: level < 3,
             canEdit: level === 3,
-            data: [],
             items: [],
           },
         }
+        if (level === 3) {
+          res.data.data = data
+        }
+        return res
       }
       else {
         return null
@@ -101,18 +108,17 @@ export default class IndexRoute extends Route {
 
   @action
   editMarker(defaultVal){
+    this.propName = 'Edit List Item'
     return App.sleep(0).then(async () => {
+      const { name, index, data } = defaultVal;
       this.editableProperty = {
-        name: defaultVal.name,
-        index: defaultVal.index + 1
+        name: name,
+        index: index + 1,
+        data: data,
       }
-      this.propName = 'Edit List Item'
-      this.toggleSidebar()
-      while (this.optionsOpen){
-        await App.sleep(100)
-      }
+      await this.waitForOptions()
     }).then(() => {
-      const { name, index } = this.editableProperty
+      const { name, index, data } = this.editableProperty
       this.editableProperty = null
       const level = defaultVal.path.split('').filter(e => e === '/').length
       if(name.trim() !== '') {
@@ -122,7 +128,7 @@ export default class IndexRoute extends Route {
             node: name,
             canAdd: level < 3,
             canEdit: level === 3,
-            data: [],
+            data: data,
             items: [],
           },
         }
@@ -154,7 +160,6 @@ export default class IndexRoute extends Route {
   characteristics = A([
     {
       node: 'characteristics',
-      data: [],
       addButton: true,
       canAdd: false,
       canRemove: false,
@@ -162,23 +167,18 @@ export default class IndexRoute extends Route {
       items:[
         {
           node: 'Uses',
-          data:[],
           items:[],
         },
         {
           node: 'Mode',
-          data:[],
           items:[],
         },
         {
           node: 'Median',
-          data:[],
-          items:[
-          ],
+          items:[],
         },
         {
           node: 'Average',
-          data:[],
           items:[],
         },
       ],

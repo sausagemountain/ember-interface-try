@@ -19,7 +19,12 @@
           {{#if value.checkbox}}
             <Input @type={{value.type}} @checked={{value.val}} @focusOut={{fn this.update @properties key}}/>
           {{else}}
-            <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} @focusOut={{fn this.update @properties key}}/>
+            {{#if value.data}}
+                <span class="sneaky no-select br5p default-width flexG1">Load Data</span>
+                <Input type="file" accept=".xls,.xlsx,.xlsb,.xlsm" class="collapsed" {{on 'change' (fn this.addData @properties key)}}/>
+            {{else}}
+              <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} @focusOut={{fn this.update @properties key}}/>
+            {{/if}}
           {{/if}}
         {{/if}}
       </label>

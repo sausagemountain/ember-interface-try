@@ -7,7 +7,7 @@ import {A} from '@ember/array'
 import {readData} from "../excel-transformer";
 
 export default class IndexRoute extends Route {
-  model = async () => {
+  async model() {
     await get(this.markerDataKey).then(val => {
       if (val) {
         this.markers = val
@@ -24,10 +24,10 @@ export default class IndexRoute extends Route {
       }
     })
 
-    App.repeat(30000, () => {
-      this.saveMarkerTreeViewCookie()
-      this.saveCharTreeViewCookie()
-      this.saveGraphsDataCookie()
+    App.repeat(30000, async   () => {
+      await this.saveMarkerTreeViewCookie()
+      await this.saveCharTreeViewCookie()
+      await this.saveGraphsDataCookie()
     })
 
     return this;
@@ -37,7 +37,8 @@ export default class IndexRoute extends Route {
 
   markerDataKey = "markerDataKey"
 
-  saveMarkerTreeViewCookie = async () => {
+  @action
+  async saveMarkerTreeViewCookie() {
     await set(this.markerDataKey, this.markers)
   }
 
@@ -55,6 +56,7 @@ export default class IndexRoute extends Route {
               node: 'corpus 1',
               items:[],
               canAdd: false,
+              canEdit: true,
               data:[],
             },
           ],
@@ -63,11 +65,46 @@ export default class IndexRoute extends Route {
     },
   ])
 
-  addToMarkers = (defaultVal) => {
+  @action
+  addToMarkers(defaultVal) {
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         name: '',
         index: defaultVal.index + 1,
+      }
+      this.propName = 'Add List Item'
+      this.toggleSidebar()
+      while (this.optionsOpen){
+        await App.sleep(100)
+      }
+    }).then(() => {
+      const { name, index } = this.editableProperty
+      this.editableProperty = null
+      const level = defaultVal.path.split('').filter(e => e === '/').length
+      if(name.trim() !== '') {
+        return {
+          index: index - 1,
+          data: {
+            node: name,
+            canAdd: level < 3,
+            canEdit: level === 3,
+            data: [],
+            items: [],
+          },
+        }
+      }
+      else {
+        return null
+      }
+    })
+  }
+
+  @action
+  editMarker(defaultVal){
+    return App.sleep(0).then(async () => {
+      this.editableProperty = {
+        name: defaultVal.name,
+        index: defaultVal.index + 1
       }
       this.propName = 'Edit List Item'
       this.toggleSidebar()
@@ -77,12 +114,14 @@ export default class IndexRoute extends Route {
     }).then(() => {
       const { name, index } = this.editableProperty
       this.editableProperty = null
+      const level = defaultVal.path.split('').filter(e => e === '/').length
       if(name.trim() !== '') {
         return {
           index: index - 1,
           data: {
             node: name,
-            canAdd: defaultVal.path.split('').filter(e => e === '/').length < 3,
+            canAdd: level < 3,
+            canEdit: level === 3,
             data: [],
             items: [],
           },
@@ -106,7 +145,8 @@ export default class IndexRoute extends Route {
 
   charsDataKey = "charsDataKey"
 
-  saveCharTreeViewCookie = async () => {
+  @action
+  async saveCharTreeViewCookie() {
     await set(this.charsDataKey, this.characteristics).then(() => {})
   }
 
@@ -145,38 +185,6 @@ export default class IndexRoute extends Route {
     },
   ])
 
-
-  addToCharacteristics = (defaultVal) => {
-    return App.sleep(0).then(async () => {
-      this.editableProperty = {
-        name: '',
-        index: defaultVal.index + 1,
-      }
-      this.propName = 'Edit List Item'
-      this.toggleSidebar()
-      while (this.optionsOpen){
-        await App.sleep(100)
-      }
-    }).then(() => {
-      const { name, index } = this.editableProperty
-      this.editableProperty = null
-      if(name.trim() !== '') {
-        return {
-          index: index - 1,
-          data: {
-            node: name,
-            data: [],
-            canAdd: defaultVal.path.split('').filter(e => e === '/').length < 3,
-            items: []
-          },
-        }
-      }
-      else {
-        return null
-      }
-    })
-  }
-
   //endregion
 
   //region sidebar sync
@@ -198,7 +206,8 @@ export default class IndexRoute extends Route {
 
   graphsDataKey = 'graphsDataKey'
 
-  saveGraphsDataCookie = async () => {
+  @action
+  async saveGraphsDataCookie() {
     await set(this.graphsDataKey, this.graphsData).then(() => {})
   }
 
@@ -254,7 +263,8 @@ export default class IndexRoute extends Route {
     }
   ])
 
-  addGraph = (event) => {
+  @action
+  addData(event) {
     const files = event.target.files;
     const reader = new FileReader()
     reader.readAsArrayBuffer(files[0])
@@ -272,14 +282,22 @@ export default class IndexRoute extends Route {
             type: 'Table'
           })
       }
+      this.saveGraphsDataCookie()
     }
   }
 
-  debug = () => {
+  @action
+  addGraph(event){
+
+  }
+
+  @action
+  debug() {
     console.log(1)
   }
 
-  last = () => {
+  @action
+  last() {
     this.toggleSidebar()
   }
 

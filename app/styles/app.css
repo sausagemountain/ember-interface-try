@@ -37,13 +37,14 @@ ul.tree-view li {
   margin-inline-start: -3ch;
   padding: 0;
   text-align: center;
+  cursor: pointer;
 }
 
 .inline-block {
   display: inline-block;
 }
 
-button.sneaky {
+button.sneaky, span.sneaky {
   margin: 0 1px;
   padding: 1px;
   border: 2px solid lightgray;
@@ -55,12 +56,12 @@ button.sneaky {
 }
 
 
-button.sneaky.default-width {
+button.sneaky.default-width, span.sneaky.default-width {
   padding: 0 0.3em;
   width: unset;
 }
 
-button.sneaky:hover {
+button.sneaky:hover, span.sneaky:hover {
   background: darkgray;
   border: 2px solid darkgray;
 }
@@ -202,8 +203,13 @@ main {
   display: block;
 }
 
-button.graph-close{
+button.graph-close {
   margin-top: -1.9em;
+}
+
+button.graph-edit {
+  margin-top: -1.9em;
+  margin-right: 2.1em;
 }
 
 .pad1px{

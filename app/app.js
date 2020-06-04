@@ -14,6 +14,15 @@ export default class App extends Application {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  static repeat(ms, func, stop){
+    setTimeout(() => {
+      if (!stop){
+        func();
+        this.repeat(ms, func)
+      }
+    },ms)
+  }
+
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver;

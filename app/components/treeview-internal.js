@@ -13,6 +13,8 @@ export default class TreeviewInternalComponent extends Component {
       this.canRemove = A(this.args.node.canRemove)
     if(this.args.isDisplayed !== undefined)
       this.isDisplayed = this.args.isDisplayed
+    if(this.args.node.isDisplayed !== undefined)
+      this.isDisplayed = this.args.node.isDisplayed
   }
 
   @tracked

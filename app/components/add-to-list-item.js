@@ -2,7 +2,8 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class AddToListItemComponent extends Component {
-  addItem = async () => {
+  @action
+  async addItem() {
     if (this.args.action) {
       let result = await this.args.action(this.args.defaultVal)
       if (result) {

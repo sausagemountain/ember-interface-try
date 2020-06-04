@@ -14,23 +14,23 @@ export default class DragTargetComponent extends Component {
   elementsCollection = A([])
 
   @action
-  clear() {
-    this.elementsCollection.clear()
+  async clear() {
+    await this.elementsCollection.clear()
   }
 
   @action
-  addItem() {
-    this.args.addItem(...arguments)
+  async addItem() {
+    await this.args.addItem(...arguments)
   }
 
   @action
-  edit(){
-    this.args.edit(...arguments)
+  async edit(){
+    await this.args.edit(...arguments)
   }
 
   @action
-  save(){
-    this.args.save(...arguments)
+  async save(){
+    await this.args.save(...arguments)
   }
 
   @action

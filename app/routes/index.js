@@ -311,5 +311,13 @@ export default class IndexRoute extends Route {
     this.toggleSidebar()
   }
 
+  @action
+  edit(){
+  }
+
+  @action
+  async saveGraphs() {
+  }
+
   //endregion
 }

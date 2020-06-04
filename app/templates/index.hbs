@@ -7,7 +7,7 @@
     <Treeview @tree={{@model.characteristics}} @action={{@model.addToMarkers}} @onChangeContents={{@model.saveCharTreeViewCookie}} @noAddButton={{true}} @class={{'areaD'}} @edit={{@model.editMarker}}/>
   </Sidebar>
   <main class="index">
-    <DragTarget @elementsCollection={{@model.graphsData}} @addItem={{@model.addGraph}}/>
+    <DragTarget @elementsCollection={{@model.graphsData}} @addItem={{@model.addGraph}} @edit={{@model.edit}} @save={{@model.saveGraphs}}/>
   </main>
   <Sidebar @right={{true}} @open={{@model.optionsOpen}} @onToggle={{@model.toggleSidebar}} @cantShow={{true}} @class={{'sidebar-inner over-scroll fixed'}}>
     {{#if @model.optionsOpen}}

@@ -2,11 +2,23 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class EditPropertyButtonComponent extends Component {
+  get editData(){
+    if (this.args.value){
+      return this.args.value
+    }
+    else {
+      return {
+        data: this.args.data,
+        index: this.args.index,
+        list: this.args.list
+      }
+    }
+  }
+
   @action
   async editItem() {
-    const editData = this.args.value
-    const result = await this.args.action(editData.data)
-    editData.list.removeAt(editData.index)
-    editData.list.insertAt(result.index, result.data)
+    const result = await this.args.action(this.editData.data, this.editData.index)
+    this.editData.list.removeAt(this.editData.index)
+    this.editData.list.insertAt(result.index, result.data)
   }
 }

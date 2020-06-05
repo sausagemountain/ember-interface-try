@@ -11,10 +11,10 @@ export function readData(dataBuffer){
     const sheet = book.Sheets[sheetName]
     const sheetJson = xlsx.utils.sheet_to_json(sheet)
     const titles = Object.keys(sheetJson[0])
-    const array_sheet = [['', ...titles]];
+    const array_sheet = [[...titles]];
     let num = 0
     for (let obj of sheetJson) {
-      const row = [num++]
+      const row = []
       for (let title of titles) {
         let val = obj[title]
         if (typeof val == 'string')

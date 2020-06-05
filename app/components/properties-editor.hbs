@@ -10,7 +10,7 @@
           {{key}}
         </span>
         {{#if value.options}}
-          <select class="flexG1">
+          <select class="flexG1" {{on 'change' (fn this.update @properties key)}}>
             {{#each value.options as |val|}}
               <option>{{val}}</option>
             {{/each}}

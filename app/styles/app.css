@@ -32,6 +32,10 @@ ul.tree-view li {
   margin-inline-start: 0;
 }
 
+.reset-font{
+  font-family: "Segoe UI", "Segoe UI Emoji", "Helvetica Neue", "Helvetica", -apple-system, sans-serif;
+}
+
 .collapsed, .collapsed * {
   visibility: collapse;
   display: none;

@@ -6,6 +6,8 @@ export default class GraphComponent extends Component {
   constructor() {
     super(...arguments);
     this.graph.classList.add('hundred')
+    this.graph.classList.add('reset-font')
+    this.graph.className += ' ' + this.args.class
     this[this.args.type](
       this.graph,
       this.args.data,
@@ -29,6 +31,15 @@ export default class GraphComponent extends Component {
     let func = () => {
       let dataTable = GoogleCharts.api.visualization.arrayToDataTable(this.args.data)
       const chart = new GoogleCharts.api.visualization.BarChart(element)
+      chart.draw(dataTable, options)
+    }
+    GoogleCharts.load(func);
+  }
+
+  Column(element, data, options){
+    let func = () => {
+      let dataTable = GoogleCharts.api.visualization.arrayToDataTable(this.args.data)
+      const chart = new GoogleCharts.api.visualization.ColumnChart(element)
       chart.draw(dataTable, options)
     }
     GoogleCharts.load(func);
@@ -135,5 +146,18 @@ export default class GraphComponent extends Component {
 }
 
 export class GraphOptions {
-
+  Line = { }
+  Bar = { }
+  Column = { }
+  Histogram = { }
+  Table = { }
+  Pie = { }
+  Scatter = { }
+  Area = { }
+  Candlestick = { }
+  Annotation = { }
+  Bubble = { }
+  Gauge = { }
+  Calendar = { }
+  Combo = { }
 }

@@ -15,22 +15,26 @@ export default class DragTargetComponent extends Component {
 
   @action
   async clear() {
-    await this.elementsCollection.clear()
+    return await this.elementsCollection.clear()
   }
 
   @action
   async addItem() {
-    await this.args.addItem(...arguments)
+    this.args.addItem(...arguments).then((value) => {
+      if (value !== undefined && value !== null) {
+        this.elementsCollection.pushObject(value)
+      }
+    })
   }
 
   @action
   async edit(){
-    await this.args.edit(...arguments)
+    return await this.args.edit(...arguments)
   }
 
   @action
   async save(){
-    await this.args.save(...arguments)
+    return await this.args.save(...arguments)
   }
 
   @action
@@ -38,7 +42,6 @@ export default class DragTargetComponent extends Component {
     event.preventDefault()
     if (this.args.action !== undefined){
       this.args.action()
-      return
     }
     else {
       const data = event.dataTransfer.getData('data')

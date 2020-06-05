@@ -5,6 +5,7 @@ import {get, set} from 'idb-keyval'
 import App from "../app";
 import {A} from '@ember/array'
 import {readData} from "../excel-transformer";
+import {GraphOptions} from "../components/graph";
 
 export default class IndexRoute extends Route {
   async model() {
@@ -274,11 +275,6 @@ export default class IndexRoute extends Route {
   ])
 
   @action
-  addGraph(event){
-    event.target.value;
-  }
-
-  @action
   addData(event) {
     const files = event.target.files;
     const reader = new FileReader()
@@ -295,7 +291,8 @@ export default class IndexRoute extends Route {
               width: '100%',
             },
             type: 'Table'
-          })
+          }
+        )
       }
       this.saveGraphsDataCookie()
     }
@@ -312,7 +309,34 @@ export default class IndexRoute extends Route {
   }
 
   @action
-  edit(){
+  addGraph(event){
+    return App.sleep(0)
+      .then(() => {
+        this.editableProperty =
+          {
+            data: [[]],
+            options: {
+              title: '',
+              height: '100%',
+              width: '100%',
+            },
+            type: Object.keys(new GraphOptions())
+          }
+      })
+      .then(this.waitForOptions)
+      .then(() => {
+        const result = this.editableProperty
+        this.editableProperty = null;
+        return result
+      })
+  }
+
+  @action
+  edit(value, index){
+    return {
+      index: index,
+      data: value
+    }
   }
 
   @action

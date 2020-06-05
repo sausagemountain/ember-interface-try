@@ -5,7 +5,7 @@
   {{#each this.elementsCollection as |elem index|}}
     <div class="mar1px one-third h15 graph-container hundred block">
       <RemovableListItem @class="float-right graph-close" @index={{index}} @list={{this.elementsCollection}}/>
-      <EditPropertyButton @class="float-right graph-edit" @action={{this.edit}} @value={{null}}/>
+      <EditPropertyButton @class="float-right graph-edit" @action={{this.edit}} @data={{elem}} @list={{this.elementsCollection}} @index={{index}}/>
       <Graph @data={{elem.data}} @options={{elem.options}} @type={{elem.type}} @class={{'br10p'}}/>
     </div>
   {{/each}}

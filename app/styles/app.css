@@ -307,6 +307,9 @@ label.normal > span {
 .text-right{
   text-align: right;
 }
+.text-center {
+  text-align: center;
+}
 
 hr{
   width: 90%;

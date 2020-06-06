@@ -1,8 +1,8 @@
-<h3 class="text-right">{{@title}}</h3>
+<h3 class="text-center">{{@title}}</h3>
 <div class="flex-row">
   {{#each-in this.props as |key value|}}
     {{#if value.object}}
-      <PropertiesEditor @properties={{value.val}} @title={{key}}/>
+      <PropertiesEditor @properties={{value.object}} @value={{value.val}} @title={{key}}/>
       <hr/>
     {{else}}
       <label class="normal">
@@ -10,20 +10,25 @@
           {{key}}
         </span>
         {{#if value.options}}
-          <select class="flexG1" {{on 'change' (fn this.update @properties key)}}>
+          <select class="flexG1" {{on 'change' (fn this.update @value key)}}>
             {{#each value.options as |val|}}
               <option>{{val}}</option>
             {{/each}}
           </select>
         {{else}}
           {{#if value.checkbox}}
-            <Input @type={{value.type}} @checked={{value.val}} @focusOut={{fn this.update @properties key}}/>
+            <Input @type={{value.checkbox}} @checked={{value.val}} @focusOut={{fn this.update @value key}}/>
           {{else}}
             {{#if value.data}}
                 <span class="sneaky no-select br5p default-width flexG1">Load Data</span>
-                <Input type="file" accept=".xls,.xlsx,.xlsb,.xlsm" class="collapsed" {{on 'change' (fn this.addData @properties key)}}/>
+                <Input type="file" accept=".xls,.xlsx,.xlsb,.xlsm" class="collapsed" {{on 'change' (fn this.addData @value key)}}/>
             {{else}}
-              <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} @focusOut={{fn this.update @properties key}}/>
+              {{#if value.range}}
+                <Input @type={{value.range}} @value={{value.val}} @min={{value.min}} @max={{value.max}} @step={{0.01}} class="flexG1" @focusOut={{fn this.update @value key}}/>
+                <span>{{value.val}}</span>
+              {{else}}
+                <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} @focusOut={{fn this.update @value key}}/>
+              {{/if}}
             {{/if}}
           {{/if}}
         {{/if}}

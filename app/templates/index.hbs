@@ -11,7 +11,7 @@
   </main>
   <Sidebar @right={{true}} @open={{@model.optionsOpen}} @onToggle={{@model.toggleSidebar}} @cantShow={{true}} @class={{'sidebar-inner over-scroll fixed'}}>
     {{#if @model.optionsOpen}}
-      <PropertiesEditor @properties={{@model.editableProperty}} @title={{@model.propName}}/>
+      <PropertiesEditor @properties={{@model.editableProperty}} @value={{@model.editableValue}} @title={{@model.propName}}/>
     {{/if}}
   </Sidebar>
 </div>

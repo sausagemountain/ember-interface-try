@@ -75,17 +75,19 @@ export default class IndexRoute extends Route {
   @action
   addToMarkers(defaultVal) {
     this.propName = 'Добавление элемента'
+    const level = defaultVal.path.split('').filter(e => e === '/').length
     return App.sleep(0).then(async () => {
       this.editableProperty = {
         name: '',
         index: defaultVal.index + 1,
-        data: [[]],
       }
-      await this.waitForOptions()
-    }).then(() => {
-      const { name, index, data } = this.editableProperty
-      this.editableProperty = null
-      const level = defaultVal.path.split('').filter(e => e === '/').length
+      if (level === 3){
+        this.editableProperty.data = [[]]
+      }
+    }).then(this.waitForOptions)
+      .then(() => {
+      const { name, index, data } = this.editableValue
+      this.editableValue = null;
       if(name.trim() !== '') {
         let res = {
           index: index - 1,
@@ -110,6 +112,7 @@ export default class IndexRoute extends Route {
   @action
   editMarker(defaultVal){
     this.propName = 'Редактирование элемента'
+    const level = defaultVal.path.split('').filter(e => e === '/').length
     return App.sleep(0).then(async () => {
       const { name, index, data } = defaultVal;
       this.editableProperty = {
@@ -117,11 +120,10 @@ export default class IndexRoute extends Route {
         index: index + 1,
         data: data,
       }
-      await this.waitForOptions()
-    }).then(() => {
-      const { name, index, data } = this.editableProperty
-      this.editableProperty = null
-      const level = defaultVal.path.split('').filter(e => e === '/').length
+    }).then(this.waitForOptions)
+      .then(() => {
+      const { name, index, data } = this.editableValue
+      this.editableValue = null;
       if(name.trim() !== '') {
         return {
           index: index - 1,
@@ -155,6 +157,9 @@ export default class IndexRoute extends Route {
 
   @tracked
   editableProperty = null
+
+  @tracked
+  editableValue = null
 
   //endregion
 
@@ -276,6 +281,7 @@ export default class IndexRoute extends Route {
 
   @action
   addData(event) {
+    this.propName = 'Добавление Данных'
     const files = event.target.files;
     const reader = new FileReader()
     reader.readAsArrayBuffer(files[0])
@@ -309,34 +315,51 @@ export default class IndexRoute extends Route {
   }
 
   @action
-  addGraph(event){
+  addGraph(){
+    this.propName = 'Добавление Элемента'
     return App.sleep(0)
       .then(() => {
+        let go = new GraphOptions()
         this.editableProperty =
           {
             data: [[]],
-            options: {
-              title: '',
-              height: '100%',
-              width: '100%',
-            },
-            type: Object.keys(new GraphOptions())
+            type: Object.keys(go),
+            options: {...go.Scatter},
           }
       })
       .then(this.waitForOptions)
       .then(() => {
-        const result = this.editableProperty
-        this.editableProperty = null;
+        const result = this.editableValue
+        this.editableValue = null;
+        result.data[0][0] = result.options.title
         return result
       })
   }
 
   @action
   edit(value, index){
-    return {
-      index: index,
-      data: value
-    }
+    this.propName = 'Редактирование Элемента'
+    return App.sleep(0)
+      .then(() => {
+        let go = new GraphOptions()
+        this.editableProperty =
+          {
+            data: [[]],
+            type: Object.keys(go),
+            options: {...go.Scatter},
+          }
+          this.editableValue = value
+      })
+      .then(this.waitForOptions)
+      .then(() => {
+        const result = this.editableValue
+        this.editableValue = null;
+        result.data[0][0] = result.options.title
+        return {
+          data: result,
+          index: index,
+        }
+      })
   }
 
   @action

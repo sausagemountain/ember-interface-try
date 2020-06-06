@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import {GoogleCharts} from "google-charts";
-import {tracked} from "@glimmer/tracking";
+import {GoogleCharts} from 'google-charts';
+import {tracked} from '@glimmer/tracking';
 
 export default class GraphComponent extends Component {
   constructor() {
@@ -145,14 +145,54 @@ export default class GraphComponent extends Component {
   }
 }
 
+
+
 export class GraphOptions {
+  static __webSafeFonts__ = ['', 'Georgia', 'Palatino', 'Times New Roman', 'Arial', 'Helvetica', 'Impact', 'Charcoal',
+    'Lucida Sans Unicode', 'Lucida Grande', 'Tahoma', 'Geneva', 'Verdana', 'Courier New', 'Lucida Console']
+  static get __fontSizes__(){
+    const res = []
+    for (let i = 10; i < 50; i++){
+      res.push(i)
+    }
+    return res
+  }
+  static get __opacity__(){
+    Number.prototype.min = null;
+    Number.prototype.max = null;
+    let opacity = new Number(1)
+    opacity.min = 0;
+    opacity.max = 1;
+    return opacity
+  }
+  static get __textStyle__() {
+    return {
+      fontName: GraphOptions.__webSafeFonts__,
+      fontSize: GraphOptions.__fontSizes__,
+      bold: false,
+      italics: false,
+      color: '#',
+      auraColor: '#',
+      opacity:  GraphOptions.__opacity__,
+    }
+  }
+
   Line = { }
   Bar = { }
   Column = { }
   Histogram = { }
   Table = { }
   Pie = { }
-  Scatter = { }
+  Scatter = {
+    aggregationTarget: ['auto','category', 'series', 'none'],
+    annotations: {
+      style:['line', 'point'],
+      textStyle: GraphOptions.__textStyle__,
+    },
+    axisTitlesPosition: ['out', 'in','none'],
+    backgroundColor: '#',
+    dataOpacity: GraphOptions.__opacity__,
+  }
   Area = { }
   Candlestick = { }
   Annotation = { }

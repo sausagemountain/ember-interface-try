@@ -84,6 +84,7 @@ export default class IndexRoute extends Route {
       if (level === 3){
         this.editableProperty.data = [[]]
       }
+      this.editableValue = this.editableProperty
     }).then(this.waitForOptions)
       .then(() => {
       const { name, index, data } = this.editableValue
@@ -120,6 +121,7 @@ export default class IndexRoute extends Route {
         index: index + 1,
         data: data,
       }
+      this.editableValue = this.editableProperty
     }).then(this.waitForOptions)
       .then(() => {
       const { name, index, data } = this.editableValue
@@ -326,6 +328,7 @@ export default class IndexRoute extends Route {
             type: Object.keys(go),
             options: {...go.Scatter},
           }
+        this.editableValue = this.editableProperty
       })
       .then(this.waitForOptions)
       .then(() => {

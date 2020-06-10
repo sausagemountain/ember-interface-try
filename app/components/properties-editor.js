@@ -66,7 +66,7 @@ export default class PropertiesEditorComponent extends Component {
 
   @action
   update(props, key, event){
-    props[key] = event.target.value
+    set(props, key, event.target.value)
   }
 
   @action
@@ -74,7 +74,7 @@ export default class PropertiesEditorComponent extends Component {
     const files = event.target.files;
     const reader = new FileReader()
     reader.readAsArrayBuffer(files[0])
-    const name = files[0].name
+    //const name = files[0].name
     reader.onloadend = () => {
       const data = readData(reader.result)
       for (let key1 in data) {

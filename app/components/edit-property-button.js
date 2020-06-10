@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import App from "../app";
 
 export default class EditPropertyButtonComponent extends Component {
   get editData(){
@@ -19,6 +20,8 @@ export default class EditPropertyButtonComponent extends Component {
   async editItem() {
     const result = await this.args.action(this.editData.data, this.editData.index)
     this.editData.list.removeAt(this.editData.index)
-    this.editData.list.insertAt(result.index, result.data)
+      App.sleep(0).then(() => {
+      this.editData.list.insertAt(result.index, result.data)
+    })
   }
 }

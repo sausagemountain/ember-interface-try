@@ -74,7 +74,7 @@ export default class IndexRoute extends Route {
 
   @action
   addToMarkers(defaultVal) {
-    this.propName = 'Добавление элемента'
+    this.propName = 'Добавление Элемента'
     const level = defaultVal.path.split('').filter(e => e === '/').length
     return App.sleep(0).then(async () => {
       this.editableProperty = {
@@ -112,7 +112,7 @@ export default class IndexRoute extends Route {
 
   @action
   editMarker(defaultVal){
-    this.propName = 'Редактирование элемента'
+    this.propName = 'Редактирование Элемента'
     const level = defaultVal.path.split('').filter(e => e === '/').length
     return App.sleep(0).then(async () => {
       const { name, index, data } = defaultVal;
@@ -318,7 +318,7 @@ export default class IndexRoute extends Route {
 
   @action
   addGraph(){
-    this.propName = 'Добавление Элемента'
+    this.propName = 'Добавление Графика'
     return App.sleep(0)
       .then(() => {
         let go = new GraphOptions()
@@ -341,7 +341,7 @@ export default class IndexRoute extends Route {
 
   @action
   edit(value, index){
-    this.propName = 'Редактирование Элемента'
+    this.propName = 'Редактирование Графика'
     return App.sleep(0)
       .then(() => {
         let go = new GraphOptions()

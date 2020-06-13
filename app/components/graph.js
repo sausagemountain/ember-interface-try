@@ -169,21 +169,29 @@ export default class GraphComponent extends Component {
 
 
 export class GraphOptions {
-  static __webSafeFonts__ = ['', 'Georgia', 'Palatino', 'Times New Roman', 'Arial', 'Helvetica', 'Impact', 'Charcoal',
-    'Lucida Sans Unicode', 'Lucida Grande', 'Tahoma', 'Geneva', 'Verdana', 'Courier New', 'Lucida Console']
+  static get __webSafeFonts__() {
+    let array = ['Georgia', 'Times New Roman', 'Arial', 'Helvetica', 'Impact',
+      'Lucida Sans Unicode', 'Tahoma', 'Verdana', 'Courier New', 'Lucida Console', 'serif', 'sans-serif', 'monospace']
+    array.sort()
+    array = ['', ...array]
+    return array
+  }
   static get __fontSizes__(){
     const res = []
-    for (let i = 10; i < 50; i++){
+    for (let i = 5; i < 30; i++){
       res.push(i)
     }
     return res
   }
+
   static get __opacity__(){
-    Number.prototype.min = null;
-    Number.prototype.max = null;
+    // Number.prototype._min = null;
+    // Number.prototype._max = null;
+    // Number.prototype._step = null;
     let opacity = new Number(1)
-    opacity.min = 0;
-    opacity.max = 1;
+    opacity._min = 0;
+    opacity._max = 1;
+    opacity._step = 0.01;
     return opacity
   }
   static get __textStyle__() {
@@ -198,6 +206,29 @@ export class GraphOptions {
     }
   }
 
+  static get __axis__() {
+    const res = {
+      title: '',
+      logScale: true,
+      textPosition: ['out', 'in', 'none'],
+      format: ['none', 'short', 'long', 'decimal', 'percent', 'currency', 'scientific'],
+      direction: [1, -1],
+      gridlines: {
+        count: -1,
+        color: '#'
+      }
+    }
+    return res
+  }
+
+  static get __pointSize__(){
+    let res = []
+    for (let i = 0; i < 16; i++){
+      res.push(i)
+    }
+    return res;
+  }
+
   Line = { }
   Bar = { }
   Column = { }
@@ -205,14 +236,25 @@ export class GraphOptions {
   Table = { }
   Pie = { }
   Scatter = {
-    aggregationTarget: ['auto','category', 'series', 'none'],
-    annotations: {
-      style:['line', 'point'],
-      textStyle: GraphOptions.__textStyle__,
-    },
-    axisTitlesPosition: ['out', 'in','none'],
-    backgroundColor: '#',
+    title: '',
+    fontName: GraphOptions.__webSafeFonts__,
+    fontSize: GraphOptions.__fontSizes__,
     dataOpacity: GraphOptions.__opacity__,
+    backgroundColor: '#',
+    theme: [null, 'maximized'],
+    titlePosition: ['out', 'in','none'],
+    axisTitlesPosition: ['out', 'in','none'],
+    curveType: ['none', 'function'],
+    lineWidth: [0, 1, 2],
+    pointsVisible: false,
+    pointSize: GraphOptions.__pointSize__,
+    pointShape: ['circle', 'triangle', 'square', 'diamond', 'star', 'polygon'],
+    legend: {
+      alignment: ['start', 'center', 'end'],
+      position: ['none', 'out', 'in', 'top', 'bottom', 'left', 'right'],
+    },
+    hAxis: GraphOptions.__axis__,
+    vAxis: GraphOptions.__axis__,
   }
   Area = { }
   Candlestick = { }

@@ -16,6 +16,10 @@ h1{
   text-align: center;
 }
 
+h3 {
+  margin-bottom: 0.5em;
+}
+
 * {
   font-family: inherit;
   box-sizing: inherit;
@@ -33,7 +37,7 @@ ul.tree-view li {
 }
 
 .reset-font{
-  font-family: "Segoe UI", "Segoe UI Emoji", "Helvetica Neue", "Helvetica", -apple-system, sans-serif;
+  font-family: unset;
 }
 
 .collapsed, .collapsed * {

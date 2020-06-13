@@ -82,4 +82,12 @@ export default class PropertiesEditorComponent extends Component {
       }
     }
   }
+
+  @tracked
+  collapsed = false
+
+  @action
+  toggleCollapse(){
+    this.collapsed = !this.collapsed
+  }
 }

@@ -1,5 +1,5 @@
-<h3 class="text-center">{{@title}}</h3>
-<div class="flex-row">
+<h3 class="text-center pointer-action" {{on 'click' this.toggleCollapse}}>{{@title}}</h3>
+<div class="flex-row {{if this.collapsed 'collapsed' ''}}">
   {{#each-in this.props as |key value|}}
     {{#if value.object}}
       <PropertiesEditor @properties={{value.object}} @value={{value.val}} @title={{key}}/>
@@ -35,4 +35,5 @@
       </label>
     {{/if}}
   {{/each-in}}
+  <hr/>
 </div>

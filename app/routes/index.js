@@ -349,20 +349,33 @@ export default class IndexRoute extends Route {
         let go = new GraphOptions()
         this.editableProperty =
           {
+            index: index + 1,
             data: [[]],
-            type: Object.keys(go),
+            type: Object.keys(go).sort(),
             options: {...go.Scatter},
           }
-          this.editableValue = value
+          this.editableValue = {...value, index: index + 1}
       })
-      .then(this.waitForOptions)
+      .then(async () => {
+        this.toggleSidebar()
+        while (this.optionsOpen){
+          const val = JSON.stringify(this.editableValue)
+          await App.sleep(100).then(async () => {
+            if (val !== JSON.stringify(this.editableValue)) {
+              this.graphsData.removeAt(index)
+              await App.sleep(1)
+              this.graphsData.insertAt(index, this.editableValue)
+            }
+          })
+        }
+      })
       .then(() => {
         const result = this.editableValue
-        this.editableValue = null;
+        this.editableValue = {};
         result.data[0][0] = result.options.title
         return {
           data: result,
-          index: index,
+          index: result.index - 1,
         }
       })
   }

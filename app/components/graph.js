@@ -8,12 +8,33 @@ export default class GraphComponent extends Component {
     this.graph.classList.add('hundred')
     this.graph.classList.add('reset-font')
     this.graph.className += ' ' + this.args.class
+    this.resize = () => {
+      this.graph.innerHTML = ''
     this[this.args.type](
       this.graph,
       this.args.data,
-      {...this.args.options}
+        {
+          ...this.args.options,
+          forceIFrame: true,
+          width:'100%',
+          height:'100%'
+        }
     )
   }
+    window.addEventListener('resize', () => {
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(this.resize, 100)
+    })
+    this.resize()
+  }
+
+  willDestroy() {
+    window.removeEventListener('resize', this.resize)
+    super.willDestroy();
+  }
+
+  timeout;
+  resize;
 
   @tracked
   graph = document.createElement('div');

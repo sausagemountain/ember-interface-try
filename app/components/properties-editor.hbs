@@ -3,16 +3,19 @@
   {{#each-in this.props as |key value|}}
     {{#if value.object}}
       <PropertiesEditor @properties={{value.object}} @value={{value.val}} @title={{key}}/>
-      <hr/>
     {{else}}
       <label class="normal">
         <span>
           {{key}}
         </span>
         {{#if value.options}}
-          <select class="flexG1" {{on 'change' (fn this.update @value key)}}>
+          <select class="flexG1" {{on 'change' (fn this.update @value key)}} {{on 'focusout' (fn this.update @value key)}}>
             {{#each value.options as |val|}}
-              <option>{{val}}</option>
+              {{#if val.sel}}
+                <option selected>{{val.val}}</option>
+              {{else}}
+                <option>{{val.val}}</option>
+              {{/if}}
             {{/each}}
           </select>
         {{else}}
@@ -24,10 +27,10 @@
                 <Input type="file" accept=".xls,.xlsx,.xlsb,.xlsm" class="collapsed" {{on 'change' (fn this.addData @value key)}}/>
             {{else}}
               {{#if value.range}}
-                <Input @type={{value.range}} @value={{value.val}} @min={{value.min}} @max={{value.max}} @step={{0.01}} class="flexG1" @focusOut={{fn this.update @value key}}/>
+                <Input @type={{value.range}} @value={{value.val}} @min={{value.min}} @max={{value.max}} @step={{value.step}} class="flexG1" {{on 'change' (fn this.update @value key)}} @focusOut={{fn this.update @value key}}/>
                 <span>{{value.val}}</span>
               {{else}}
-                <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} @focusOut={{fn this.update @value key}}/>
+                <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} {{on 'change' (fn this.update @value key)}} @focusOut={{fn this.update @value key}}/>
               {{/if}}
             {{/if}}
           {{/if}}

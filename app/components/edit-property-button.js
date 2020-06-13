@@ -19,8 +19,9 @@ export default class EditPropertyButtonComponent extends Component {
   @action
   async editItem() {
     const result = await this.args.action(this.editData.data, this.editData.index)
-    this.editData.list.removeAt(this.editData.index)
-      App.sleep(0).then(() => {
+    App.sleep(0).then(() => {
+      this.editData.list.removeAt(this.editData.index)
+    }).then(() => {
       this.editData.list.insertAt(result.index, result.data)
     })
   }

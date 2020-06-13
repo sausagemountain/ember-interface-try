@@ -88,7 +88,7 @@ export default class IndexRoute extends Route {
     }).then(this.waitForOptions)
       .then(() => {
       const { name, index, data } = this.editableValue
-      this.editableValue = null;
+      this.editableValue = {};
       if(name.trim() !== '') {
         let res = {
           index: index - 1,
@@ -121,11 +121,11 @@ export default class IndexRoute extends Route {
         index: index + 1,
         data: data,
       }
-      this.editableValue = this.editableProperty
+      this.editableValue = {}
     }).then(this.waitForOptions)
       .then(() => {
       const { name, index, data } = this.editableValue
-      this.editableValue = null;
+      this.editableValue = {};
       if(name.trim() !== '') {
         return {
           index: index - 1,
@@ -322,18 +322,20 @@ export default class IndexRoute extends Route {
     return App.sleep(0)
       .then(() => {
         let go = new GraphOptions()
+        this.editableValue = {
+          type: 'Scatter'
+        }
         this.editableProperty =
           {
             data: [[]],
-            type: Object.keys(go),
-            options: {...go.Scatter},
+            type: Object.keys(go).sort(),
+            options: {...go[this.editableValue.type]},
           }
-        this.editableValue = this.editableProperty
       })
       .then(this.waitForOptions)
       .then(() => {
         const result = this.editableValue
-        this.editableValue = null;
+        this.editableValue = {};
         result.data[0][0] = result.options.title
         return result
       })

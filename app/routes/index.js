@@ -318,6 +318,9 @@ export default class IndexRoute extends Route {
 
   @action
   addGraph(){
+    if (this.optionsOpen){
+      return
+    }
     this.propName = 'Добавление Графика'
     return App.sleep(0)
       .then(() => {
@@ -348,6 +351,9 @@ export default class IndexRoute extends Route {
 
   @action
   edit(value, index){
+    if (this.optionsOpen){
+      return
+    }
     this.propName = 'Редактирование Графика'
     return App.sleep(0)
       .then(() => {
@@ -365,7 +371,7 @@ export default class IndexRoute extends Route {
           if (['Pie', 'Histogram'].indexOf(value.type) !== -1)
             len = value.data.length - 1
           for (let i = 0; i < len; i++) {
-            cols.push("#")
+            cols.push(App.getRandomColor())
           }
           value.options.colors = cols;
         }

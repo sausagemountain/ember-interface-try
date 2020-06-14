@@ -14,6 +14,15 @@ export default class App extends Application {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  static getRandomColor(){
+    const vals = '0123456789ABCDEF'
+    let a = '#'
+    for (let i = 0; i < 6; i++){
+      a += vals.split('')[Math.floor(Math.random()*vals.length)]
+    }
+    return a
+  }
+
   static repeat(ms, func, stop){
     setTimeout(() => {
       if (!stop){

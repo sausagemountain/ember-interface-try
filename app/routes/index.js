@@ -357,7 +357,7 @@ export default class IndexRoute extends Route {
           index: index + 1,
           data: [[]],
           type: Object.keys(go).sort(),
-          options: {...go.Scatter},
+          options: {...go[value.type]},
         }
         if (!value.options.colors) {
           const cols = []

@@ -11,13 +11,12 @@ export default class PropertiesEditorComponent extends Component {
       let a = {
         val: undefined
       }
-      if (this.args.value && this.args.value[key] !== undefined && this.args.value[key] !== null){
+      if (this.args.value !== undefined && this.args.value[key] !== undefined && this.args.value[key] !== null){
         a.val = this.args.value[key]
       }
       if (typeof val === "boolean") {
         {
           a.checkbox = a.type = 'checkbox'
-
         }
       } else if (typeof val === "undefined" || typeof val === "symbol" || typeof val === "string") {
         {
@@ -88,6 +87,11 @@ export default class PropertiesEditorComponent extends Component {
   @action
   update(props, key, event){
     set(props, key, event.target.value)
+  }
+
+  @action
+  updateChecked(props, key, event){
+    set(props, key, event.target.checked)
   }
 
   @action

@@ -227,6 +227,7 @@ export class GraphOptions {
   Column = { ...this.Scatter }
   Histogram = { }
   Table = {
+    title: '',
     alternatingRowStyle: true,
     sort: true,
     sortAscending: true,

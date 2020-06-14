@@ -22,7 +22,7 @@
           </select>
         {{else}}
           {{#if value.checkbox}}
-            <Input @type={{value.checkbox}} @checked={{value.val}} @focusOut={{fn this.update @value key}}/>
+            <Input @type={{value.checkbox}} @checked={{value.val}} @focusOut={{fn this.updateChecked @value key}} {{on 'input' (fn this.updateChecked @value key)}}/>
           {{else}}
             {{#if value.data}}
                 <span class="sneaky no-select br5p default-width flexG1">Load Data</span>

@@ -49,6 +49,14 @@ export default class PropertiesEditorComponent extends Component {
             if (val.length >= 0) {
               if (Array.isArray(val[0])) {
                 a.data = val
+              } else if (val.length == 1) {
+                a.array = a.type = 'array'
+                const pr = {}
+                for (let k = 0; k < a.val.length; k++) {
+                  pr[k] = val[0]
+                }
+                a.props = pr
+                a.item = val[0]
               } else {
                 a.options = [...val].map((value) => {
                   return {

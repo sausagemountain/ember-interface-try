@@ -5,9 +5,11 @@
       <PropertiesEditor @properties={{value.object}} @value={{value.val}} @title={{key}}/>
     {{else}}
       <label class="normal">
-        <span>
-          {{key}}
-        </span>
+        {{#unless value.array}}
+          <span>
+            {{key}}
+          </span>
+        {{/unless}}
         {{#if value.options}}
           <select class="flexG1" {{on 'change' (fn this.update @value key)}} {{on 'focusout' (fn this.update @value key)}}>
             {{#each value.options as |val|}}
@@ -30,12 +32,17 @@
                 <Input @type={{value.range}} @value={{value.val}} @min={{value.min}} @max={{value.max}} @step={{value.step}} class="flexG1" {{on 'change' (fn this.update @value key)}} @focusOut={{fn this.update @value key}}/>
                 <span>{{value.val}}</span>
               {{else}}
-                <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} {{on 'change' (fn this.update @value key)}} @focusOut={{fn this.update @value key}}/>
+                {{#unless value.array}}
+                  <Input @type={{value.type}} @value={{value.val}} class="flexG1" pattern={{value.regex}} {{on 'change' (fn this.update @value key)}} @focusOut={{fn this.update @value key}}/>
+                {{/unless}}
               {{/if}}
             {{/if}}
           {{/if}}
         {{/if}}
       </label>
+    {{/if}}
+    {{#if value.array}}
+      <PropertiesEditor @properties={{value.props}} @value={{value.val}} @title={{key}}/>
     {{/if}}
   {{/each-in}}
   <hr/>

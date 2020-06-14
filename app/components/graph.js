@@ -10,17 +10,17 @@ export default class GraphComponent extends Component {
     this.graph.className += ' ' + this.args.class
     this.resize = () => {
       this.graph.innerHTML = ''
-    this[this.args.type](
-      this.graph,
-      this.args.data,
+      this[this.args.type](
+        this.graph,
+        this.args.data,
         {
           ...this.args.options,
           forceIFrame: true,
           width:'100%',
           height:'100%'
         }
-    )
-  }
+      )
+    }
     window.addEventListener('resize', () => {
       clearTimeout(this.timeout)
       this.timeout = setTimeout(this.resize, 100)
@@ -111,46 +111,10 @@ export default class GraphComponent extends Component {
     GoogleCharts.load(func);
   }
 
-  Candlestick(element, data, options){
-    let func = () => {
-      let dataTable = GoogleCharts.api.visualization.arrayToDataTable(this.args.data)
-      const chart = new GoogleCharts.api.visualization.CandlestickChart(element)
-      chart.draw(dataTable, options)
-    }
-    GoogleCharts.load(func);
-  }
-
-  Annotation(element, data, options){
-    let func = () => {
-      let dataTable = GoogleCharts.api.visualization.arrayToDataTable(this.args.data)
-      const chart = new GoogleCharts.api.visualization.AnnotationChart(element)
-      chart.draw(dataTable, options)
-    }
-    GoogleCharts.load(func);
-  }
-
   Bubble(element, data, options){
     let func = () => {
       let dataTable = GoogleCharts.api.visualization.arrayToDataTable(this.args.data)
       const chart = new GoogleCharts.api.visualization.BubbleChart(element)
-      chart.draw(dataTable, options)
-    }
-    GoogleCharts.load(func);
-  }
-
-  Gauge(element, data, options){
-    let func = () => {
-      let dataTable = GoogleCharts.api.visualization.arrayToDataTable(this.args.data)
-      const chart = new GoogleCharts.api.visualization.Gauge(element)
-      chart.draw(dataTable, options)
-    }
-    GoogleCharts.load(func);
-  }
-
-  Calendar(element, data, options){
-    let func = () => {
-      let dataTable = GoogleCharts.api.visualization.arrayToDataTable(this.args.data)
-      const chart = new GoogleCharts.api.visualization.Calendar(element)
       chart.draw(dataTable, options)
     }
     GoogleCharts.load(func);
@@ -235,32 +199,31 @@ export class GraphOptions {
   Histogram = { }
   Table = { }
   Pie = { }
-  Scatter = {
-    title: '',
-    fontName: GraphOptions.__webSafeFonts__,
-    fontSize: GraphOptions.__fontSizes__,
-    dataOpacity: GraphOptions.__opacity__,
-    backgroundColor: '#',
-    theme: [null, 'maximized'],
-    titlePosition: ['out', 'in','none'],
-    axisTitlesPosition: ['out', 'in','none'],
-    curveType: ['none', 'function'],
-    lineWidth: [0, 1, 2],
-    pointsVisible: false,
-    pointSize: GraphOptions.__pointSize__,
-    pointShape: ['circle', 'triangle', 'square', 'diamond', 'star', 'polygon'],
-    legend: {
-      alignment: ['start', 'center', 'end'],
-      position: ['none', 'out', 'in', 'top', 'bottom', 'left', 'right'],
-    },
-    hAxis: GraphOptions.__axis__,
-    vAxis: GraphOptions.__axis__,
-  }
+  Scatter = (() => {
+    return {
+      title: '',
+      fontName: GraphOptions.__webSafeFonts__,
+      fontSize: GraphOptions.__fontSizes__,
+      dataOpacity: GraphOptions.__opacity__,
+      backgroundColor: '#',
+      theme: [null, 'maximized'],
+      titlePosition: ['out', 'in','none'],
+      axisTitlesPosition: ['out', 'in','none'],
+      curveType: ['none', 'function'],
+      lineWidth: [0, 1, 2],
+      pointsVisible: false,
+      pointSize: GraphOptions.__pointSize__,
+      pointShape: ['circle', 'triangle', 'square', 'diamond', 'star', 'polygon'],
+      colors: ['#'],
+      legend: {
+        alignment: ['start', 'center', 'end'],
+        position: ['none', 'out', 'in', 'top', 'bottom', 'left', 'right'],
+      },
+      hAxis: GraphOptions.__axis__,
+      vAxis: GraphOptions.__axis__,
+    }
+  })()
   Area = { }
-  Candlestick = { }
-  Annotation = { }
   Bubble = { }
-  Gauge = { }
-  Calendar = { }
   Combo = { }
 }

@@ -348,13 +348,20 @@ export default class IndexRoute extends Route {
       .then(() => {
         let go = new GraphOptions()
         this.editableProperty =
-          {
-            index: index + 1,
-            data: [[]],
-            type: Object.keys(go).sort(),
-            options: {...go.Scatter},
+        {
+          index: index + 1,
+          data: [[]],
+          type: Object.keys(go).sort(),
+          options: {...go.Scatter},
+        }
+        if (!value.options.colors) {
+          const cols = []
+          for (let i = 0; i < value.data[0].length - 1; i++) {
+            cols.push("#")
           }
-          this.editableValue = {...value, index: index + 1}
+          value.options.colors = cols;
+        }
+        this.editableValue = {...value, index: index + 1}
       })
       .then(async () => {
         this.toggleSidebar()
@@ -363,6 +370,7 @@ export default class IndexRoute extends Route {
           await App.sleep(100).then(async () => {
             if (val !== JSON.stringify(this.editableValue)) {
               this.graphsData.removeAt(index)
+              this.editableValue.data[0][0] = this.editableValue.options.title
               await App.sleep(1)
               this.graphsData.insertAt(index, this.editableValue)
             }

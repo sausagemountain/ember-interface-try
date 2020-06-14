@@ -323,7 +323,12 @@ export default class IndexRoute extends Route {
       .then(() => {
         let go = new GraphOptions()
         this.editableValue = {
-          type: 'Scatter'
+          type: 'Scatter',
+          options: {
+            forceIFrame: true,
+            width:'100%',
+            height:'100%'
+          }
         }
         this.editableProperty =
           {
@@ -356,7 +361,10 @@ export default class IndexRoute extends Route {
         }
         if (!value.options.colors) {
           const cols = []
-          for (let i = 0; i < value.data[0].length - 1; i++) {
+          let len = value.data[0].length - 1
+          if (['Pie', 'Histogram'].indexOf(value.type) !== -1)
+            len = value.data.length - 1
+          for (let i = 0; i < len; i++) {
             cols.push("#")
           }
           value.options.colors = cols;

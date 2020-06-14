@@ -15,9 +15,6 @@ export default class GraphComponent extends Component {
         this.args.data,
         {
           ...this.args.options,
-          forceIFrame: true,
-          width:'100%',
-          height:'100%'
         }
       )
     }
@@ -170,19 +167,31 @@ export class GraphOptions {
     }
   }
 
+  static get __gridlines__() {
+    return {
+      count: -1,
+      color: '#'
+    }
+  }
+
   static get __axis__() {
     const res = {
+      textPosition: ['out', 'in', 'none'],
+      direction: [1, -1],
       title: '',
       logScale: true,
-      textPosition: ['out', 'in', 'none'],
       format: ['none', 'short', 'long', 'decimal', 'percent', 'currency', 'scientific'],
-      direction: [1, -1],
-      gridlines: {
-        count: -1,
-        color: '#'
-      }
+      gridlines: GraphOptions.__gridlines__,
+      minorGridlines: GraphOptions.__gridlines__,
     }
     return res
+  }
+
+  static get __legend__() {
+    return {
+      alignment: ['start', 'center', 'end'],
+      position: ['none', 'out', 'in', 'top', 'bottom', 'left', 'right'],
+    }
   }
 
   static get __pointSize__(){
@@ -193,37 +202,75 @@ export class GraphOptions {
     return res;
   }
 
-  Line = { }
-  Bar = { }
-  Column = { }
+  Scatter = {
+    title: '',
+    fontName: GraphOptions.__webSafeFonts__,
+    fontSize: GraphOptions.__fontSizes__,
+    dataOpacity: GraphOptions.__opacity__,
+    backgroundColor: '#',
+    theme: [null, 'maximized'],
+    titlePosition: ['out', 'in','none'],
+    axisTitlesPosition: ['out', 'in','none'],
+    curveType: ['none', 'function'],
+    lineWidth: [0, 1, 2, 3, 4, 5],
+    pointsVisible: false,
+    pointSize: GraphOptions.__pointSize__,
+    orientation: ['vertical', 'horizontal'],
+    pointShape: ['circle', 'triangle', 'square', 'diamond', 'star', 'polygon'],
+    colors: ['#'],
+    legend: GraphOptions.__legend__,
+    hAxis: GraphOptions.__axis__,
+    vAxis: GraphOptions.__axis__,
+  }
+  Line = { ...this.Scatter }
+  Bar = { ...this.Scatter }
+  Column = { ...this.Scatter }
   Histogram = { }
-  Table = { }
-  Pie = { }
-  Scatter = (() => {
+  Table = {
+    alternatingRowStyle: true,
+    sort: true,
+    sortAscending: true,
+    sortColumn: -1
+  }
+  Pie = (() => {
+    let psa = new Number(0)
+    psa._min = -180
+    psa._max = 180
+    psa._step = 1
     return {
       title: '',
       fontName: GraphOptions.__webSafeFonts__,
       fontSize: GraphOptions.__fontSizes__,
-      dataOpacity: GraphOptions.__opacity__,
-      backgroundColor: '#',
-      theme: [null, 'maximized'],
-      titlePosition: ['out', 'in','none'],
-      axisTitlesPosition: ['out', 'in','none'],
-      curveType: ['none', 'function'],
-      lineWidth: [0, 1, 2],
-      pointsVisible: false,
-      pointSize: GraphOptions.__pointSize__,
-      pointShape: ['circle', 'triangle', 'square', 'diamond', 'star', 'polygon'],
-      colors: ['#'],
-      legend: {
-        alignment: ['start', 'center', 'end'],
-        position: ['none', 'out', 'in', 'top', 'bottom', 'left', 'right'],
-      },
-      hAxis: GraphOptions.__axis__,
-      vAxis: GraphOptions.__axis__,
+      is3D: false,
+      pieHole: GraphOptions.__opacity__,
+      pieSliceText: ['percentage', 'value', 'label', 'none'],
+      pieStartAngle: psa,
+      reverseCategories: false,
+      legend: GraphOptions.__legend__
     }
   })()
-  Area = { }
+  Area = {
+    title: '',
+    fontName: GraphOptions.__webSafeFonts__,
+    fontSize: GraphOptions.__fontSizes__,
+    dataOpacity: GraphOptions.__opacity__,
+    areaOpacity: GraphOptions.__opacity__,
+    backgroundColor: '#',
+    theme: [null, 'maximized'],
+    titlePosition: ['out', 'in','none'],
+    axisTitlesPosition: ['out', 'in','none'],
+    curveType: ['none', 'function'],
+    lineWidth: [0, 1, 2, 3, 4, 5],
+    pointsVisible: false,
+    pointSize: GraphOptions.__pointSize__,
+    pointShape: ['circle', 'triangle', 'square', 'diamond', 'star', 'polygon'],
+    colors: ['#'],
+    isStacked: [false, true, 'percent', 'relative', 'absolute'],
+    interpolateNulls: false,
+    legend: GraphOptions.__legend__,
+    hAxis: GraphOptions.__axis__,
+    vAxis: GraphOptions.__axis__,
+  }
   Bubble = { }
   Combo = { }
 }
